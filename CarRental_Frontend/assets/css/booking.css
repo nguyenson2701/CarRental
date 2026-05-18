@@ -1,0 +1,235 @@
+.booking-hero {
+    background: linear-gradient(135deg, rgba(13, 110, 253, .9), rgba(11, 94, 215, .85));
+    border-radius: 24px;
+    padding: 40px;
+    color: #fff;
+    margin-bottom: 40px;
+    box-shadow: 0 18px 45px rgba(0,0,0,.12);
+}
+
+.booking-wrap {
+    padding: 60px 0;
+}
+
+.booking-wrap .booking-hero,
+.booking-wrap .booking-card {
+    max-width: 1320px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.booking-card {
+    background: #fff;
+    border-radius: 24px;
+    box-shadow: 0 18px 45px rgba(0,0,0,.08);
+    overflow: hidden;
+    border: 1px solid rgba(0,0,0,.04);
+}
+
+.booking-left {
+    background: #fff;
+    padding: 30px;
+    height: 100%;
+}
+
+.booking-right {
+    background: #f8fbff;
+    padding: 30px;
+    height: 100%;
+    border-left: 1px solid #eef2f7;
+}
+
+.car-main-img {
+    width: 100%;
+    height: 340px;
+    object-fit: cover;
+    border-radius: 18px;
+    border: 1px solid #e9eef5;
+    box-shadow: 0 10px 25px rgba(0,0,0,.06);
+}
+
+.thumb-list {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+}
+
+.thumb-list img {
+    width: 88px;
+    height: 66px;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 1px solid #dde5ef;
+    cursor: pointer;
+    transition: .25s ease;
+    background: #fff;
+}
+
+.thumb-list img:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 18px rgba(0,0,0,.08);
+}
+
+.car-title {
+    font-size: 34px;
+    font-weight: 800;
+    margin-bottom: 18px;
+    color: #0b1727;
+}
+
+.meta-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0,1fr));
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.meta-item {
+    background: #f8fbff;
+    border: 1px solid #e8eef6;
+    border-radius: 16px;
+    padding: 14px 16px;
+}
+
+.meta-item strong {
+    display: block;
+    font-size: 13px;
+    color: #6b7a90;
+    margin-bottom: 4px;
+}
+
+.price-box {
+    background: linear-gradient(135deg, #0d6efd 0%, #3d8bfd 100%);
+    color: #fff;
+    border-radius: 20px;
+    padding: 22px;
+    margin-bottom: 24px;
+    box-shadow: 0 16px 32px rgba(13,110,253,.22);
+}
+
+.price-box .big {
+    font-size: 32px;
+    font-weight: 800;
+    line-height: 1.1;
+}
+
+.booking-form-title {
+    font-size: 26px;
+    font-weight: 800;
+    color: #0b1727;
+    margin-bottom: 8px;
+}
+
+.booking-form-subtitle {
+    color: #73839a;
+    margin-bottom: 24px;
+}
+
+.form-control, .form-select {
+    height: 52px;
+    border-radius: 14px;
+    border: 1px solid #dce5f0;
+    padding: 12px 16px;
+    box-shadow: none !important;
+}
+
+textarea.form-control {
+    min-height: 120px;
+    height: auto;
+}
+
+.form-label {
+    font-weight: 700;
+    color: #243247;
+    margin-bottom: 8px;
+}
+
+.booking-btn {
+    border-radius: 999px;
+    padding: 14px 28px;
+    font-weight: 700;
+    font-size: 16px;
+    box-shadow: 0 12px 24px rgba(13,110,253,.22);
+}
+
+.availability-box {
+    border-radius: 16px;
+    padding: 14px 16px;
+    font-weight: 700;
+    margin-top: 8px;
+    display: none;
+}
+
+.availability-box.success {
+    display: block;
+    background: #eafaf1;
+    color: #169b56;
+    border: 1px solid #bde7cd;
+}
+
+.availability-box.error {
+    display: block;
+    background: #fff1f1;
+    color: #d93025;
+    border: 1px solid #f0c4c1;
+}
+
+.calendar-card {
+    margin-top: 24px;
+    background: #fff;
+    border-radius: 18px;
+    border: 1px solid #e8eef6;
+    padding: 20px;
+}
+
+.calendar-card h5 {
+    font-weight: 800;
+    margin-bottom: 14px;
+    color: #0b1727;
+}
+
+.calendar-list {
+    margin: 0;
+    padding-left: 18px;
+}
+
+.calendar-list li {
+    margin-bottom: 8px;
+    color: #516174;
+}
+
+.total-preview {
+    background: #fff;
+    border: 1px dashed #cdd9ea;
+    border-radius: 18px;
+    padding: 16px;
+    margin-top: 18px;
+}
+
+.total-preview .row-line {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    color: #4a5a6d;
+}
+
+.total-preview .row-line.total {
+    font-size: 18px;
+    font-weight: 800;
+    color: #0b1727;
+    margin-top: 10px;
+    border-top: 1px solid #e8eef6;
+    padding-top: 12px;
+}
+
+@media (max-width: 991px) {
+    .booking-right {
+        border-left: 0;
+        border-top: 1px solid #eef2f7;
+    }
+
+    .car-main-img {
+        height: 260px;
+    }
+}

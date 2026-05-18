@@ -1,0 +1,20 @@
+# Node
+node_modules/
+
+# Upload ảnh xe
+img/
+uploads/
+
+# File log
+*.log
+
+# File cấu hình nhạy cảm
+.env
+config/database.php
+
+# File hệ thống
+.DS_Store
+Thumbs.db
+
+# Backup
+*.sql
