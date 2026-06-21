@@ -28,11 +28,52 @@
     </div>
 </div>
 
+<div class="ai-chat-widget" data-ai-chat>
+    <button class="ai-chat-toggle" type="button" aria-label="Mở trợ lý AI" aria-expanded="false">
+        <i class="fas fa-comments"></i>
+        <span class="ai-chat-notice">AI</span>
+    </button>
+
+    <section class="ai-chat-panel" aria-label="Trợ lý AI VinaDrive" hidden>
+        <div class="ai-chat-header">
+            <div class="ai-chat-avatar">
+                <i class="fas fa-robot"></i>
+            </div>
+            <div>
+                <h6>Trợ lý AI VinaDrive</h6>
+                <p>Sẵn sàng hỗ trợ khách hàng</p>
+            </div>
+            <button class="ai-chat-close" type="button" aria-label="Đóng trợ lý AI">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <div class="ai-chat-body" role="log" aria-live="polite">
+            <div class="ai-message ai-message-bot">
+                <span>Xin chào! Mình có thể tư vấn cách đặt xe, giấy tờ cần thiết, thanh toán và trả xe. Bạn cần hỗ trợ gì?</span>
+            </div>
+        </div>
+
+        <div class="ai-chat-suggestions" aria-label="Câu hỏi gợi ý">
+            <button type="button" data-ai-question="Có xe nào còn trống?">Xe còn trống</button>
+            <button type="button" data-ai-question="Có xe nào dưới 1 triệu mỗi ngày?">Dưới 1 triệu</button>
+            <button type="button" data-ai-question="Đơn của tôi">Đơn của tôi</button>
+        </div>
+
+        <form class="ai-chat-form">
+            <input type="text" name="message" autocomplete="off" placeholder="Nhập câu hỏi của bạn..." aria-label="Nhập câu hỏi">
+            <button type="submit" aria-label="Gửi câu hỏi">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </form>
+    </section>
+</div>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="lib/wow/wow.min.js"></script>
 <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-<script src="assets/js/main.js?v=4"></script>
+<script src="assets/js/main.js?v=8"></script>
 <?php if (!empty($pageScripts)): ?>
     <?php foreach ($pageScripts as $script): ?>
         <script src="<?php echo htmlspecialchars($script); ?>"></script>

@@ -99,7 +99,7 @@ if (!empty($_SESSION['user_id'])) {
     <link href="lib/animate/animate.min.css" rel="stylesheet">
     <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
-    <link href="assets/css/style.css?v=5" rel="stylesheet">
+    <link href="assets/css/style.css?v=8" rel="stylesheet">
 
     <?php if (!empty($pageStyles)): ?>
         <?php foreach ($pageStyles as $style): ?>

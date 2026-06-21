@@ -55,7 +55,7 @@ include 'includes/header.php';
                 </div>
             </div>
 
-            <form action="../CarRental_Backend/api/bookings/return_store.php" method="POST" enctype="multipart/form-data">
+            <form id="returnForm" action="../CarRental_Backend/api/bookings/return_store.php" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="BookingID" value="<?php echo (int)$booking['BookingID']; ?>">
 
                 <div class="mb-3">
@@ -89,6 +89,22 @@ include 'includes/header.php';
                     Quay lại
                 </a>
             </form>
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    var f = document.getElementById('returnForm');
+                    if (!f) return;
+                    f.addEventListener('submit', function () {
+                        console.log('returnForm: submit event fired');
+                    });
+                    var btn = f.querySelector('button[type="submit"]');
+                    if (btn) {
+                        btn.addEventListener('click', function () {
+                            console.log('returnForm: submit button clicked');
+                        });
+                    }
+                });
+            </script>
         </div>
     </div>
 </div>
