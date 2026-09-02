@@ -1,0 +1,30 @@
+<?php
+
+/**
+ * Front controller - diem vao duy nhat cho cac URL "sach" theo kien truc
+ * MVC moi (vd /Carrental/admin/brands). Cac trang cu (CarRental_Admin/...,
+ * CarRental_Frontend/...) van la file PHP rieng, khong di qua day - dang
+ * chuyen doi dan tung module sang MVC, xem CLAUDE.md.
+ *
+ * BASE_PATH la phan duong dan truoc phan "logic" cua route. Vi du can chinh
+ * lai neu doi ten thu muc du an tren XAMPP (hien la /Carrental).
+ */
+
+require_once __DIR__ . '/app/autoload.php';
+
+use App\Core\Router;
+use App\Controllers\Admin\BrandController;
+
+const BASE_PATH = '/Carrental';
+
+$router = new Router();
+
+// --- Hang xe (module mau) ---
+$router->get('/admin/brands', [BrandController::class, 'index']);
+$router->get('/admin/brands/create', [BrandController::class, 'create']);
+$router->post('/admin/brands', [BrandController::class, 'store']);
+$router->get('/admin/brands/{id}/edit', [BrandController::class, 'edit']);
+$router->post('/admin/brands/{id}/update', [BrandController::class, 'update']);
+$router->post('/admin/brands/{id}/delete', [BrandController::class, 'destroy']);
+
+$router->dispatch(BASE_PATH);
