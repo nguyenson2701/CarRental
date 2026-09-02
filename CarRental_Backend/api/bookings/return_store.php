@@ -2,7 +2,7 @@
 require_once __DIR__ . '/../../config/auth.php';
 requireLogin('../../../CarRental_Frontend/login.php');
 require_once __DIR__ . '/../../config/database.php';
-require_once __DIR__ . '/helpers.php';
+require_once __DIR__ . '/../../helpers/bookings.php';
 require_once __DIR__ . '/../../helpers/upload.php';
 
 $userID = (int)($_SESSION['user_id'] ?? 0);

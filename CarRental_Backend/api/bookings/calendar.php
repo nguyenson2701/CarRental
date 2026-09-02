@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/../../config/database.php';
-require_once __DIR__ . '/helpers.php';
+require_once __DIR__ . '/../../helpers/bookings.php';
 
 $carID = (int)($_GET['car_id'] ?? 0);
 

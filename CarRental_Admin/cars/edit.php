@@ -43,7 +43,7 @@ $types  = $conn->query("SELECT TypeID, TypeName FROM CarTypes ORDER BY TypeName 
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
     <link href="../vendor/nunito/nunito.css" rel="stylesheet">
     <link href="../css/sb-admin-2.min.css" rel="stylesheet">
-    <link href="../assets/css/cars-admin.css?v=1" rel="stylesheet">
+    <link href="../css/cars-admin.css?v=1" rel="stylesheet">
 
     <style>
         .img-card {

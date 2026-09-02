@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/../../config/database.php';
-require_once __DIR__ . '/helpers.php';
+require_once __DIR__ . '/../../helpers/bookings.php';
 
 $blockingStatusSql = bookingStatusSql(BOOKING_BLOCKING_STATUSES, 'b');
 $activeRentalStatusSql = bookingStatusSql(BOOKING_ACTIVE_RENTAL_STATUSES, 'b');

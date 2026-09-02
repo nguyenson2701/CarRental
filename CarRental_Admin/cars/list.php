@@ -34,7 +34,7 @@ if ($keyword != '') {
     <link href="../vendor/nunito/nunito.css" rel="stylesheet">
     <link href="../css/sb-admin-2.min.css" rel="stylesheet">
     <link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-    <link href="../assets/css/cars-admin.css?v=1" rel="stylesheet">
+    <link href="../css/cars-admin.css?v=1" rel="stylesheet">
 
 
     <style>

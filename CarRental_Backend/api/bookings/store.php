@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../../config/database.php';
 require_once __DIR__ . '/../../config/auth.php';
-require_once __DIR__ . '/helpers.php';
+require_once __DIR__ . '/../../helpers/bookings.php';
 
 requireLogin('../../../CarRental_Frontend/login.php');
 

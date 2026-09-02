@@ -238,7 +238,7 @@ $remainingAmount = max(0, $grandTotal - $paidAmount);
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
     <link href="../vendor/nunito/nunito.css" rel="stylesheet">
     <link href="../css/sb-admin-2.min.css" rel="stylesheet">
-    <link href="../assets/css/booking-detail.css" rel="stylesheet">
+    <link href="../css/booking-detail.css" rel="stylesheet">
     <link href="../css/admin-theme.css?v=4" rel="stylesheet">
 </head>
 <body id="page-top">
