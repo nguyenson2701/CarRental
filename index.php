@@ -16,6 +16,7 @@ use App\Core\Router;
 use App\Controllers\Admin\BrandController;
 use App\Controllers\Admin\CarController;
 use App\Controllers\Admin\UserController;
+use App\Controllers\Admin\BlogController;
 
 const BASE_PATH = '/Carrental';
 
@@ -47,5 +48,13 @@ $router->post('/admin/users', [UserController::class, 'store']);
 $router->get('/admin/users/{id}/edit', [UserController::class, 'edit']);
 $router->post('/admin/users/{id}/update', [UserController::class, 'update']);
 $router->post('/admin/users/{id}/delete', [UserController::class, 'destroy']);
+
+// --- Blog ---
+$router->get('/admin/blogs', [BlogController::class, 'index']);
+$router->get('/admin/blogs/create', [BlogController::class, 'create']);
+$router->post('/admin/blogs', [BlogController::class, 'store']);
+$router->get('/admin/blogs/{id}/edit', [BlogController::class, 'edit']);
+$router->post('/admin/blogs/{id}/update', [BlogController::class, 'update']);
+$router->post('/admin/blogs/{id}/delete', [BlogController::class, 'destroy']);
 
 $router->dispatch(BASE_PATH);
