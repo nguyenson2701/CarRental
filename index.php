@@ -18,6 +18,7 @@ use App\Controllers\Admin\CarController;
 use App\Controllers\Admin\UserController;
 use App\Controllers\Admin\BlogController;
 use App\Controllers\Admin\MenuController;
+use App\Controllers\Admin\DashboardController;
 
 const BASE_PATH = '/Carrental';
 
@@ -65,5 +66,8 @@ $router->post('/admin/menus', [MenuController::class, 'store']);
 $router->get('/admin/menus/{id}/edit', [MenuController::class, 'edit']);
 $router->post('/admin/menus/{id}/update', [MenuController::class, 'update']);
 $router->post('/admin/menus/{id}/delete', [MenuController::class, 'destroy']);
+
+// --- Dashboard ---
+$router->get('/admin/dashboard', [DashboardController::class, 'index']);
 
 $router->dispatch(BASE_PATH);

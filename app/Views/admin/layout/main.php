@@ -28,6 +28,7 @@ function navActive(string $prefix, string $currentPath): string
     <link href="/Carrental/CarRental_Admin/css/sb-admin-2.min.css" rel="stylesheet">
     <link href="/Carrental/CarRental_Admin/css/admin-theme.css" rel="stylesheet">
     <link href="/Carrental/CarRental_Admin/css/cars-admin.css" rel="stylesheet">
+    <link href="/Carrental/CarRental_Admin/css/admin-dashboard.css" rel="stylesheet">
 </head>
 <body id="page-top">
 <div id="wrapper">
@@ -108,8 +109,9 @@ function navActive(string $prefix, string $currentPath): string
     </div>
 </div>
 
-<script src="/Carrental/app/Views/assets/vendor/jquery/jquery.min.js"></script>
-<script src="/Carrental/app/Views/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="/Carrental/app/Views/assets/js/sb-admin-2.min.js"></script>
+<script src="/Carrental/CarRental_Admin/vendor/jquery/jquery.min.js"></script>
+<script src="/Carrental/CarRental_Admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/Carrental/CarRental_Admin/vendor/jquery-easing/jquery.easing.min.js"></script>
+<script src="/Carrental/CarRental_Admin/js/sb-admin-2.min.js"></script>
 </body>
 </html>
