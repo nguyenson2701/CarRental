@@ -1,8 +1,9 @@
 <?php
 require_once __DIR__ . '/../../config/auth.php';
-requireCustomer('../../../CarRental_Frontend/login.php');
+requireLogin('../../../CarRental_Frontend/login.php');
 require_once __DIR__ . '/../../config/database.php';
 require_once __DIR__ . '/helpers.php';
+require_once __DIR__ . '/../../helpers/upload.php';
 
 $userID = (int)($_SESSION['user_id'] ?? 0);
 $bookingID = (int)($_POST['BookingID'] ?? 0);
@@ -39,24 +40,9 @@ if (!is_dir($uploadDir) && !mkdir($uploadDir, 0777, true)) {
 }
 
 function uploadReturnImage($fileKey, $prefix, $uploadDir) {
-    if (!isset($_FILES[$fileKey]) || $_FILES[$fileKey]['error'] !== UPLOAD_ERR_OK) {
-        return '';
-    }
+    $fileName = safeUploadImage($fileKey, $uploadDir, $prefix, ['jpg', 'jpeg', 'png', 'webp']);
 
-    if (!is_uploaded_file($_FILES[$fileKey]['tmp_name'])) {
-        return '';
-    }
-
-    $ext = strtolower(pathinfo($_FILES[$fileKey]['name'], PATHINFO_EXTENSION));
-    $allowed = ['jpg', 'jpeg', 'png', 'webp'];
-    if (!in_array($ext, $allowed, true)) {
-        return '';
-    }
-
-    $fileName = $prefix . '_' . time() . '_' . bin2hex(random_bytes(4)) . '.' . $ext;
-    $target = rtrim($uploadDir, '/\\') . DIRECTORY_SEPARATOR . $fileName;
-
-    if (!move_uploaded_file($_FILES[$fileKey]['tmp_name'], $target)) {
+    if ($fileName === null || $fileName === false) {
         return '';
     }
 

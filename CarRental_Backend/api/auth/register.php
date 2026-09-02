@@ -1,8 +1,10 @@
 <?php
-session_start();
+require_once '../../config/auth.php';
 require_once '../../config/database.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    requireCsrf('../../../CarRental_Frontend/register.php');
+
     $fullName = trim($_POST['full_name'] ?? '');
     $email = trim($_POST['email'] ?? '');
     $phone = trim($_POST['phone'] ?? '');
@@ -56,13 +58,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $roleID = 3;
     $status = 'Active';
 
-    // Theo đúng code login hiện tại của bạn: lưu mật khẩu thường vào PasswordHash
-    $sql = "INSERT INTO users 
+    $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+
+    $sql = "INSERT INTO users
             (FullName, Email, Phone, PasswordHash, Address, RoleID, Status, CreatedAt, UpdatedAt)
             VALUES (?, ?, ?, ?, ?, ?, ?, NOW(), NOW())";
 
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sssssis", $fullName, $email, $phone, $password, $address, $roleID, $status);
+    $stmt->bind_param("sssssis", $fullName, $email, $phone, $passwordHash, $address, $roleID, $status);
 
     if ($stmt->execute()) {
         $_SESSION['register_success'] = "Đăng ký thành công! Bạn có thể đăng nhập ngay.";

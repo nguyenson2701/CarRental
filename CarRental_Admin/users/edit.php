@@ -28,8 +28,9 @@ if (!$user) {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet">
+    <link href="../vendor/nunito/nunito.css" rel="stylesheet">
     <link href="../css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="../css/admin-theme.css?v=4" rel="stylesheet">
 </head>
 <body id="page-top">
 <div id="wrapper">
@@ -47,6 +48,7 @@ if (!$user) {
                 <div class="card shadow mb-4">
                     <div class="card-body">
                         <form action="../../CarRental_Backend/api/admin/users/update.php" method="POST" enctype="multipart/form-data">
+                            <?php echo csrf_field(); ?>
                             <input type="hidden" name="UserID" value="<?php echo $user['UserID']; ?>">
                             <input type="hidden" name="OldAvatar" value="<?php echo htmlspecialchars($user['Avatar']); ?>">
                             <input type="hidden" name="OldLicenseFrontImage" value="<?php echo htmlspecialchars($user['LicenseFrontImage']); ?>">
@@ -122,9 +124,9 @@ if (!$user) {
                                 </div>
 
                                 <div class="col-md-6 form-group">
-                                    <label>Mật khẩu</label>
-                                    <input type="text" name="PasswordHash" class="form-control"
-                                           value="<?php echo htmlspecialchars($user['PasswordHash']); ?>" required>
+                                    <label>Mật khẩu mới</label>
+                                    <input type="password" name="PasswordHash" class="form-control"
+                                           placeholder="Để trống nếu không đổi mật khẩu" autocomplete="new-password">
                                 </div>
 
                                 <div class="col-md-6 form-group">

@@ -1,8 +1,10 @@
 <?php
-session_start();
+require_once '../../config/auth.php';
 require_once '../../config/database.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    requireCsrf('../../../CarRental_Frontend/login.php');
+
     $email = trim($_POST['email'] ?? '');
     $password = trim($_POST['password'] ?? '');
 
@@ -15,14 +17,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($result->num_rows > 0) {
         $user = $result->fetch_assoc();
 
-        // debug tạm nếu cần
-        // echo "<pre>";
-        // print_r($user);
-        // echo "</pre>";
-        // exit();
+        $storedHash = $user['PasswordHash'];
+        $passwordOk = password_verify($password, $storedHash);
 
-        // bạn đang dùng mật khẩu thường
-        if ($password === $user['PasswordHash']) {
+        // Tuong thich nguoc: tai khoan cu con luu mat khau dang thuong
+        if (!$passwordOk && $password === $storedHash) {
+            $passwordOk = true;
+            $newHash = password_hash($password, PASSWORD_DEFAULT);
+            $rehash = $conn->prepare("UPDATE users SET PasswordHash = ? WHERE UserID = ?");
+            $rehash->bind_param("si", $newHash, $user['UserID']);
+            $rehash->execute();
+        }
+
+        if ($passwordOk) {
             $roleID = (int)($user['RoleID'] ?? 0);
 
             $_SESSION['user_id'] = $user['UserID'];
@@ -37,17 +44,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 exit();
             } else {
                 $_SESSION['login_error'] = "Tài khoản chưa được gán quyền hợp lệ!";
-                header("Location: ../../../CarRental_Admin/login.php");
+                header("Location: ../../../CarRental_Frontend/login.php");
                 exit();
             }
         } else {
             $_SESSION['login_error'] = "Sai mật khẩu!";
-            header("Location: ../../../CarRental_Admin/login.php");
+            header("Location: ../../../CarRental_Frontend/login.php");
             exit();
         }
     } else {
         $_SESSION['login_error'] = "Email không tồn tại!";
-        header("Location: ../../../CarRental_Admin/login.php");
+        header("Location: ../../../CarRental_Frontend/login.php");
         exit();
     }
 }

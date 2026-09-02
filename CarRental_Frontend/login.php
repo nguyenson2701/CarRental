@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once '../CarRental_Backend/config/auth.php';
 
 if (isset($_SESSION['user_id']) && isset($_SESSION['role_id'])) {
     if ($_SESSION['role_id'] == 1 || $_SESSION['role_id'] == 2) {
@@ -48,6 +48,7 @@ unset($_SESSION['login_error']);
                                     <?php endif; ?>
 
                                     <form class="user" method="POST" action="../CarRental_Backend/api/auth/login.php">
+                                        <?php echo csrf_field(); ?>
                                         <div class="form-group">
                                             <input type="email" name="email" class="form-control form-control-user"
                                                 id="exampleInputEmail" placeholder="Enter Email Address..." required>

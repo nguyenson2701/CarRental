@@ -2,6 +2,7 @@
 require_once '../../config/auth.php';
 requireLogin('../../../CarRental_Frontend/login.php');
 require_once '../../config/database.php';
+require_once '../../helpers/upload.php';
 
 $userID = (int)($_SESSION['user_id'] ?? 0);
 
@@ -42,42 +43,19 @@ $avatarPath = $oldUser['Avatar'] ?? '';
 $frontPath  = $oldUser['LicenseFrontImage'] ?? '';
 $backPath   = $oldUser['LicenseBackImage'] ?? '';
 
-/* Đường dẫn upload thật trên server */
+/* Đường dẫn upload thật trên server (safeUploadImage tự tạo thư mục nếu chưa có) */
 $avatarDir = '../../../CarRental_Frontend/assets/img/avatars/';
 $gplxDir   = '../../../CarRental_Frontend/assets/img/GPLX/';
 
-/* Tạo thư mục nếu chưa có */
-if (!is_dir($avatarDir)) {
-    mkdir($avatarDir, 0777, true);
-}
-
-if (!is_dir($gplxDir)) {
-    mkdir($gplxDir, 0777, true);
-}
-
 /* Hàm upload ảnh */
 function uploadImageIfExists($fileKey, $prefix, $oldPath, $uploadDir, $dbPrefix) {
-    if (!isset($_FILES[$fileKey]) || $_FILES[$fileKey]['error'] !== 0) {
+    $newFileName = safeUploadImage($fileKey, $uploadDir, $prefix, ['jpg', 'jpeg', 'png', 'webp']);
+
+    if ($newFileName === null || $newFileName === false) {
         return $oldPath;
     }
 
-    $tmpName = $_FILES[$fileKey]['tmp_name'];
-    $originalName = basename($_FILES[$fileKey]['name']);
-    $ext = strtolower(pathinfo($originalName, PATHINFO_EXTENSION));
-    $allowed = ['jpg', 'jpeg', 'png', 'webp'];
-
-    if (!in_array($ext, $allowed, true)) {
-        return $oldPath;
-    }
-
-    $newName = $prefix . '_' . time() . '_' . rand(1000, 9999) . '.' . $ext;
-    $target = $uploadDir . $newName;
-
-    if (move_uploaded_file($tmpName, $target)) {
-        return $dbPrefix . $newName;
-    }
-
-    return $oldPath;
+    return $dbPrefix . $newFileName;
 }
 
 /* Upload avatar */

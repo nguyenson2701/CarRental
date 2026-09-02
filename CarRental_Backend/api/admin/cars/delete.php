@@ -1,6 +1,7 @@
 <?php
 require_once '../../../config/auth.php';
 requireAdminOrStaff('../../../../CarRental_Admin/login.php');
+requireCsrf('../../../../CarRental_Admin/cars/list.php');
 require_once '../../../config/database.php';
 
 function deleteFolderRecursive($folderPath) {

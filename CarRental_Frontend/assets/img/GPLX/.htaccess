@@ -1,0 +1,7 @@
+# Chan thuc thi script trong thu muc upload anh
+<IfModule mod_php.c>
+    php_flag engine off
+</IfModule>
+<FilesMatch "\.(php|php\d|phtml|pht|phar|cgi|pl|asp|aspx|jsp|exe|sh)$">
+    Require all denied
+</FilesMatch>

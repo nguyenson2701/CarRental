@@ -1,0 +1,242 @@
+/*
+ * admin-theme.css
+ * Giao dien dong bo cho toan bo CarRental_Admin, thay the phan "nhua"/bong bay
+ * mac dinh cua Bootstrap 4 + SB Admin 2 (shadow nang, bo goc vuong, badge mau
+ * dam, gradient sidebar gat) bang phong cach phang, hien dai hon - mo rong
+ * tu phong cach da co san o css/admin-dashboard.css (Dashboard) ra toan site.
+ *
+ * Nap SAU sb-admin-2.min.css (va admin-dashboard.css/cars-admin.css/... neu co)
+ * de cac quy tac ben duoi ghi de dung.
+ */
+
+:root {
+    --admin-primary: #4e73df;
+    --admin-primary-dark: #3a5cc9;
+    --admin-radius: 12px;
+    --admin-radius-sm: 8px;
+    --admin-border: #e7eaf3;
+    --admin-shadow: 0 .15rem .85rem rgba(58, 59, 69, .08);
+    --admin-shadow-hover: 0 .35rem 1.2rem rgba(58, 59, 69, .12);
+    --admin-text: #2e3548;
+    --admin-text-muted: #6f7485;
+}
+
+body {
+    background-color: #f4f6fb;
+    font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: var(--admin-text);
+}
+
+/* ---------------------------------------------------------------------
+ * Sidebar: bo gradient gat, chuyen sang mau phang + hieu ung active/hover
+ * dang "pill" hien dai thay vi chi in dam chu.
+ * ------------------------------------------------------------------- */
+#accordionSidebar.sidebar-dark {
+    background: linear-gradient(180deg, #4863d6 0%, #3c53c4 100%) !important;
+}
+
+#accordionSidebar .sidebar-brand {
+    font-weight: 700;
+    letter-spacing: .03em;
+}
+
+#accordionSidebar hr.sidebar-divider {
+    border-top: 1px solid rgba(255, 255, 255, .12);
+    margin: 0.5rem 1rem;
+}
+
+#accordionSidebar .sidebar-heading {
+    color: rgba(255, 255, 255, .45);
+    font-weight: 700;
+    letter-spacing: .08em;
+}
+
+/* Dung margin tren chinh nav-link de tao khoang "thut le" pill, khong dung
+ * padding tren .nav-item (li) - vi .nav-link con ke thua width co dinh
+ * 6.5rem tu rule goc cua sb-admin-2, cong them padding ngoai se lam tong
+ * be rong vuot qua khung sidebar 224px, gay cuon ngang ngay trong sidebar. */
+#accordionSidebar .nav-item {
+    overflow: hidden;
+}
+
+#accordionSidebar .nav-item .nav-link {
+    box-sizing: border-box;
+    width: auto;
+    border-radius: var(--admin-radius-sm);
+    padding: .65rem .9rem;
+    margin: 2px 12px;
+    color: rgba(255, 255, 255, .72);
+    transition: background-color .15s ease, color .15s ease;
+}
+
+#accordionSidebar .nav-item .nav-link i {
+    color: rgba(255, 255, 255, .55);
+    transition: color .15s ease;
+}
+
+#accordionSidebar .nav-item .nav-link:hover,
+#accordionSidebar .nav-item .nav-link:focus {
+    background-color: rgba(255, 255, 255, .08);
+    color: #fff;
+}
+
+#accordionSidebar .nav-item .nav-link:hover i,
+#accordionSidebar .nav-item .nav-link:focus i {
+    color: #fff;
+}
+
+#accordionSidebar .nav-item.active .nav-link {
+    background-color: rgba(255, 255, 255, .16);
+    color: #fff;
+    font-weight: 700;
+}
+
+#accordionSidebar .nav-item.active .nav-link i {
+    color: #fff;
+}
+
+/* ---------------------------------------------------------------------
+ * Co dinh sidebar khi cuon trang (tu 768px tro len, khop voi breakpoint
+ * sb-admin-2 dung de mo rong sidebar len 14rem). Duoi 768px giu nguyen
+ * hanh vi mac dinh (sidebar an/hien dang overlay tren dien thoai) de
+ * khong pha responsive.
+ * ------------------------------------------------------------------- */
+@media (min-width: 768px) {
+    #accordionSidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        overflow-y: auto;
+        overflow-x: hidden; /* khoa cung, khong cho sidebar tu cuon ngang du co sai so gi */
+        z-index: 1039;
+    }
+
+    #content-wrapper {
+        margin-left: 14rem;
+        transition: margin-left .15s ease;
+    }
+
+    /* Khi bam nut thu gon sidebar (sb-admin-2.min.js them class nay vao body) */
+    body.sidebar-toggled #content-wrapper {
+        margin-left: 6.5rem;
+    }
+}
+
+/* ---------------------------------------------------------------------
+ * Topbar: bo bong nang, gon va phang hon.
+ * ------------------------------------------------------------------- */
+.topbar {
+    box-shadow: none !important;
+    border-bottom: 1px solid var(--admin-border);
+}
+
+.topbar h5 {
+    color: var(--admin-text);
+    font-weight: 700;
+}
+
+/* ---------------------------------------------------------------------
+ * Card / table / form dung chung: flatten shadow, bo goc lon hon, bang
+ * gon gang thay vi luoi ke day dac.
+ * ------------------------------------------------------------------- */
+.card {
+    border: 1px solid var(--admin-border);
+    border-radius: var(--admin-radius);
+    box-shadow: var(--admin-shadow);
+}
+
+.shadow,
+.shadow-sm {
+    box-shadow: var(--admin-shadow) !important;
+}
+
+.card-header {
+    background-color: #fff;
+    border-bottom: 1px solid #edf0f7;
+    border-top-left-radius: var(--admin-radius) !important;
+    border-top-right-radius: var(--admin-radius) !important;
+    font-weight: 700;
+    color: var(--admin-text);
+}
+
+.card-body {
+    color: var(--admin-text);
+}
+
+.table {
+    color: var(--admin-text);
+}
+
+.table thead th {
+    background-color: #f8f9fc;
+    color: var(--admin-text-muted);
+    border-bottom: 1px solid var(--admin-border);
+    border-top: none;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .03em;
+}
+
+.table-bordered,
+.table-bordered th,
+.table-bordered td {
+    border-color: #edf0f7;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #f8f9fc;
+}
+
+.form-control {
+    border: 1px solid var(--admin-border);
+    border-radius: var(--admin-radius-sm);
+}
+
+.form-control:focus {
+    border-color: var(--admin-primary);
+    box-shadow: 0 0 0 .15rem rgba(78, 115, 223, .15);
+}
+
+/* ---------------------------------------------------------------------
+ * Buttons: bo goc thong nhat, bot bong khi hover, giu nguyen mau sac.
+ * ------------------------------------------------------------------- */
+.btn {
+    border-radius: var(--admin-radius-sm);
+    font-weight: 600;
+}
+
+.btn-sm {
+    border-radius: 7px;
+}
+
+.btn.shadow-sm {
+    box-shadow: 0 .1rem .35rem rgba(58, 59, 69, .12) !important;
+}
+
+/* ---------------------------------------------------------------------
+ * Badge: chuyen sang mau nhat (pastel) + chu mau dam thay vi nen mau dam
+ * chu trang - do "nhua"/gat mat cua badge Bootstrap mac dinh.
+ * ------------------------------------------------------------------- */
+.badge {
+    font-weight: 700;
+    padding: .4em .75em;
+    border-radius: 999px;
+}
+
+.badge-success { background-color: #eaf8f1; color: #158456; }
+.badge-danger  { background-color: #fff0f2; color: #d52f45; }
+.badge-warning { background-color: #fff7e6; color: #b7791f; }
+.badge-info    { background-color: #e9f8fc; color: #1976a3; }
+.badge-primary { background-color: #eef3ff; color: #3158c7; }
+.badge-secondary { background-color: #eef1f6; color: #596174; }
+
+/* ---------------------------------------------------------------------
+ * Dropdown menu (thong bao, user menu o topbar): bo goc mem, bong nhe.
+ * ------------------------------------------------------------------- */
+.dropdown-menu {
+    border: 1px solid var(--admin-border);
+    border-radius: var(--admin-radius);
+    box-shadow: var(--admin-shadow-hover);
+}

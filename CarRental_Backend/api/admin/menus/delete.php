@@ -1,6 +1,7 @@
 <?php
 require_once '../../../config/auth.php';
 requireAdminOrStaff('../../../../CarRental_Admin/login.php');
+requireCsrf('../../../../CarRental_Admin/menus/list.php');
 require_once '../../../config/database.php';
 
 $id = (int)($_GET['id'] ?? 0);

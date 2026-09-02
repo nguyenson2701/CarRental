@@ -16,7 +16,9 @@ $result = $conn->query("
     <meta charset="UTF-8">
     <title>Quản lý menu</title>
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="../vendor/nunito/nunito.css" rel="stylesheet">
     <link href="../css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="../css/admin-theme.css?v=4" rel="stylesheet">
 </head>
 <body id="page-top">
 <div id="wrapper">
@@ -38,8 +40,9 @@ $result = $conn->query("
                     <div class="alert alert-success">Thao tác thành công.</div>
                 <?php endif; ?>
 
-                <div class="card shadow">
-                    <div class="card-body table-responsive">
+                <div class="card shadow mb-4">
+                    <div class="card-body">
+                    <div class="table-responsive">
                         <table class="table table-bordered table-hover">
                             <thead class="thead-light">
                                 <tr>
@@ -72,7 +75,7 @@ $result = $conn->query("
                                                 <a href="edit.php?id=<?php echo (int)$row['MenuID']; ?>" class="btn btn-warning btn-sm">
                                                     Sửa
                                                 </a>
-                                                <a href="../../CarRental_Backend/api/admin/menus/delete.php?id=<?php echo (int)$row['MenuID']; ?>"
+                                                <a href="<?php echo csrf_url('../../CarRental_Backend/api/admin/menus/delete.php?id=' . (int)$row['MenuID']); ?>"
                                                    class="btn btn-danger btn-sm"
                                                    onclick="return confirm('Bạn có chắc muốn xóa menu này?');">
                                                     Xóa
@@ -87,6 +90,7 @@ $result = $conn->query("
                                 <?php endif; ?>
                             </tbody>
                         </table>
+                    </div>
                     </div>
                 </div>
             </div>

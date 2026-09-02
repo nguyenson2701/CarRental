@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once '../CarRental_Backend/config/auth.php';
 
 if (isset($_SESSION['user_id']) && isset($_SESSION['role_id'])) {
     if ($_SESSION['role_id'] == 1 || $_SESSION['role_id'] == 2) {
@@ -52,6 +52,7 @@ unset($_SESSION['register_error'], $_SESSION['register_success']);
                         <?php endif; ?>
 
                         <form method="POST" action="../CarRental_Backend/api/auth/register.php">
+                            <?php echo csrf_field(); ?>
                             <div class="form-group">
                                 <label>Họ và tên</label>
                                 <input type="text" name="full_name" class="form-control" required>

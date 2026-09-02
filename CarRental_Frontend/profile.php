@@ -286,6 +286,7 @@ if ($statusText === 'Approved' || $statusText === 'Đã xác minh') {
                     <?php endif; ?>
 
                     <form action="../CarRental_Backend/api/user/update_profile.php" method="POST" enctype="multipart/form-data">
+                        <?php echo csrf_field(); ?>
                         <input type="file" name="Avatar" id="AvatarInput" class="hidden-file-input" accept="image/*">
 
                         <div class="row">

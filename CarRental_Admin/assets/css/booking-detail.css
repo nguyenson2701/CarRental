@@ -96,6 +96,16 @@
     white-space: nowrap;
 }
 
+/*
+ * Cot trai (anh xe + thong tin khach/dia diem/thoi gian) "dinh" khi cuon
+ * trang, tranh de trong mot khoang lon phia duoi khi cot phai (thanh toan +
+ * cac hanh dong) dai hon nhieu so voi cot trai.
+ */
+.detail-sticky-col {
+    position: sticky;
+    top: 20px;
+}
+
 .section-card,
 .car-image-box {
     background: #fff;
@@ -272,14 +282,6 @@
 .location-compact-card {
     height: auto;
     padding: 16px;
-}
-
-.location-card-inline {
-    height: 100%;
-}
-
-.location-card-inline .location-list {
-    grid-template-columns: 1fr;
 }
 
 .location-list {

@@ -11,7 +11,9 @@ $parents = $conn->query("SELECT MenuID, MenuName FROM menus ORDER BY DisplayOrde
     <meta charset="UTF-8">
     <title>Thêm menu</title>
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="../vendor/nunito/nunito.css" rel="stylesheet">
     <link href="../css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="../css/admin-theme.css?v=4" rel="stylesheet">
 </head>
 <body id="page-top">
 <div id="wrapper">
@@ -25,6 +27,7 @@ $parents = $conn->query("SELECT MenuID, MenuName FROM menus ORDER BY DisplayOrde
                 <div class="card shadow">
                     <div class="card-body">
                         <form action="../../CarRental_Backend/api/admin/menus/store.php" method="POST">
+                            <?php echo csrf_field(); ?>
                             <div class="form-group">
                                 <label>Tên menu</label>
                                 <input type="text" name="MenuName" class="form-control" required>

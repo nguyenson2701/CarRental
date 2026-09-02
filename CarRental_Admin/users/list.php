@@ -26,9 +26,10 @@ if ($keyword !== '') {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet">
+    <link href="../vendor/nunito/nunito.css" rel="stylesheet">
     <link href="../css/sb-admin-2.min.css" rel="stylesheet">
 
+    <link href="../css/admin-theme.css?v=4" rel="stylesheet">
 </head>
 <body id="page-top">
 <div id="wrapper">
@@ -38,35 +39,6 @@ if ($keyword !== '') {
     <div id="content-wrapper" class="d-flex flex-column">
         <div id="content">
             <?php include '../partials/topbar.php'; ?>
-            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-                <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                    <i class="fa fa-bars"></i>
-                </button>
-
-                <form method="GET" class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                    <div class="input-group">
-                        <input type="text" name="keyword" class="form-control bg-light border-0 small"
-                               placeholder="Tìm người dùng..."
-                               value="<?php echo htmlspecialchars($keyword); ?>">
-                        <div class="input-group-append">
-                            <button class="btn btn-primary" type="submit">
-                                <i class="fas fa-search fa-sm"></i>
-                            </button>
-                        </div>
-                    </div>
-                </form>
-
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="../../CarRental_Backend/api/auth/logout.php">
-                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">
-                                <?php echo htmlspecialchars($_SESSION['name'] ?? 'Admin'); ?>
-                            </span>
-                            <i class="fas fa-sign-out-alt"></i>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
 
             <div class="container-fluid">
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -78,6 +50,21 @@ if ($keyword !== '') {
 
                 <div class="card shadow mb-4">
                     <div class="card-body">
+                        <form method="GET" class="mb-4">
+                            <div class="input-group">
+                                <input type="text" name="keyword" class="form-control"
+                                       placeholder="Tìm người dùng..."
+                                       value="<?php echo htmlspecialchars($keyword); ?>">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="submit">
+                                        <i class="fas fa-search"></i> Tìm kiếm
+                                    </button>
+                                    <?php if ($keyword !== ''): ?>
+                                        <a href="list.php" class="btn btn-secondary">Xóa lọc</a>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        </form>
                         <div class="table-responsive">
                             <table class="table table-bordered table-hover">
                                 <thead class="thead-light">
@@ -152,7 +139,7 @@ if ($keyword !== '') {
                                                     <a href="edit.php?id=<?php echo $row['UserID']; ?>" class="btn btn-warning btn-sm">
                                                         <i class="fas fa-edit"></i>
                                                     </a>
-                                                    <a href="../../CarRental_Backend/api/admin/users/delete.php?id=<?php echo $row['UserID']; ?>"
+                                                    <a href="<?php echo csrf_url('../../CarRental_Backend/api/admin/users/delete.php?id=' . (int)$row['UserID']); ?>"
                                                     class="btn btn-danger btn-sm"
                                                     onclick="return confirm('Bạn có chắc muốn xóa người dùng này không?');">
                                                         <i class="fas fa-trash"></i>

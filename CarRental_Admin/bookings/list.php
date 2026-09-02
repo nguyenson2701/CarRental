@@ -131,14 +131,10 @@ function paymentTypeText($type) {
     <title>Quản lý đơn đặt xe</title>
 
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="../vendor/nunito/nunito.css" rel="stylesheet">
     <link href="../css/sb-admin-2.min.css" rel="stylesheet">
 
     <style>
-        .booking-card {
-            border: none;
-            border-radius: 16px;
-            box-shadow: 0 0.2rem 1rem rgba(58,59,69,.08);
-        }
         .table-booking th {
             white-space: nowrap;
             vertical-align: middle;
@@ -169,6 +165,7 @@ function paymentTypeText($type) {
             height: 42px;
         }
     </style>
+    <link href="../css/admin-theme.css?v=4" rel="stylesheet">
 </head>
 <body id="page-top">
 <div id="wrapper">
@@ -195,7 +192,7 @@ function paymentTypeText($type) {
                     <div class="alert alert-success">Admin đã xác nhận thanh toán thành công.</div>
                 <?php endif; ?>
 
-                <div class="card booking-card">
+                <div class="card shadow mb-4">
                     <div class="card-body">
                         <div class="row filter-bar mb-4">
                             <div class="col-md-6 mb-2">
@@ -286,88 +283,71 @@ function paymentTypeText($type) {
 
                                             <td>
                                                 <?php $current = $row['Status']; ?>
+                                                <div class="d-flex flex-column" style="gap:6px;">
 
-                                                <?php if (($row['ReturnStatus'] ?? '') === 'Pending'): ?>
-                                                    <a href="return_check.php?id=<?php echo (int)$row['BookingID']; ?>"
-                                                       class="btn btn-success btn-sm btn-block mb-2">
-                                                        Kiểm tra trả xe
-                                                    </a>
-                                                <?php endif; ?>
-
-                                                <?php if (($row['InitialPaymentStatus'] ?? '') === 'Pending' && !in_array($current, ['Cancelled', 'Completed'], true)): ?>
-                                                    <form action="../../CarRental_Backend/api/admin/payments/confirm.php" method="POST" class="mb-2">
-                                                        <input type="hidden" name="PaymentID" value="<?php echo (int)$row['InitialPaymentID']; ?>">
-                                                        <input type="hidden" name="Redirect" value="list">
-                                                        <div class="small text-muted mb-1">
-                                                            <?php echo htmlspecialchars(paymentTypeText($row['InitialPaymentType'])); ?>:
-                                                            <?php echo formatMoney($row['InitialAmount']); ?>
-                                                        </div>
-                                                        <select name="PaymentMethod" class="form-control form-control-sm mb-2" required>
-                                                            <option value="Cash">Tiền mặt</option>
-                                                            <option value="BankTransfer">Chuyển khoản</option>
-                                                        </select>
-                                                        <button type="submit" class="btn btn-warning btn-sm btn-block">
-                                                            Xác nhận thanh toán
-                                                        </button>
-                                                    </form>
-                                                <?php endif; ?>
-
-                                                <?php if (($row['ReturnStatus'] ?? '') === 'Approved' && ($row['FinalPaymentStatus'] ?? '') === 'Pending'): ?>
-                                                    <form action="../../CarRental_Backend/api/admin/payments/confirm_final.php" method="POST" class="mb-2">
-                                                        <input type="hidden" name="PaymentID" value="<?php echo (int)$row['FinalPaymentID']; ?>">
-                                                        <input type="hidden" name="Redirect" value="list">
-                                                        <div class="small text-muted mb-1">
-                                                            Cuối: <?php echo formatMoney($row['FinalAmount']); ?>
-                                                        </div>
-                                                        <select name="PaymentMethod" class="form-control form-control-sm mb-2" required>
-                                                            <option value="Cash">Tiền mặt</option>
-                                                            <option value="BankTransfer">Chuyển khoản</option>
-                                                        </select>
-                                                        <button type="submit" class="btn btn-warning btn-sm btn-block">
-                                                            Xác nhận TT cuối
-                                                        </button>
-                                                    </form>
-                                                <?php endif; ?>
-
-                                                <form action="../../CarRental_Backend/api/admin/bookings/update.php" method="POST" class="mb-2">
-                                                    <input type="hidden" name="BookingID" value="<?php echo (int)$row['BookingID']; ?>">
-
-                                                    <select name="Status" class="form-control form-control-sm mb-2"
-                                                        <?php echo in_array($current, ['Paid', 'Completed', 'Cancelled']) ? 'disabled' : ''; ?>>
-
-                                                        <?php if ($current === 'Pending'): ?>
-                                                            <option value="Pending" selected>Chưa giải quyết</option>
-                                                            <option value="Cancelled">Đã hủy</option>
-
-                                                        <?php elseif ($current === 'Confirmed'): ?>
-                                                            <option value="Confirmed" selected>Đã xác nhận</option>
-                                                            <option value="Cancelled">Đã hủy</option>
-
-                                                        <?php elseif ($current === 'Paid'): ?>
-                                                            <option value="Paid" selected>Đã thanh toán</option>
-
-                                                        <?php elseif ($current === 'Completed'): ?>
-                                                            <option value="Completed" selected>Hoàn thành</option>
-
-                                                        <?php elseif ($current === 'Cancelled'): ?>
-                                                            <option value="Cancelled" selected>Đã hủy</option>
-
-                                                        <?php else: ?>
-                                                            <option value="<?php echo htmlspecialchars($current); ?>" selected>
-                                                                <?php echo htmlspecialchars($current); ?>
-                                                            </option>
-                                                        <?php endif; ?>
-                                                    </select>
-
-                                                    <button type="submit" class="btn btn-primary btn-sm btn-block"
-                                                        <?php echo in_array($current, ['Paid', 'Completed', 'Cancelled']) ? 'disabled' : ''; ?>>
-                                                        Cập nhật
-                                                    </button>
-                                                    <a href="detail.php?id=<?php echo (int)$row['BookingID']; ?>" class="btn btn-info btn-sm btn-block mb-2">
+                                                    <a href="detail.php?id=<?php echo (int)$row['BookingID']; ?>" class="btn btn-info btn-sm btn-block">
                                                         Xem chi tiết
                                                     </a>
-                                                </form>
-                                                
+
+                                                    <?php if (($row['ReturnStatus'] ?? '') === 'Pending'): ?>
+                                                        <a href="return_check.php?id=<?php echo (int)$row['BookingID']; ?>"
+                                                           class="btn btn-success btn-sm btn-block">
+                                                            Kiểm tra trả xe
+                                                        </a>
+                                                    <?php endif; ?>
+
+                                                    <?php if (($row['InitialPaymentStatus'] ?? '') === 'Pending' && !in_array($current, ['Cancelled', 'Completed'], true)): ?>
+                                                        <form action="../../CarRental_Backend/api/admin/payments/confirm.php" method="POST">
+                                                            <?php echo csrf_field(); ?>
+                                                            <input type="hidden" name="PaymentID" value="<?php echo (int)$row['InitialPaymentID']; ?>">
+                                                            <input type="hidden" name="Redirect" value="list">
+                                                            <div class="input-group input-group-sm">
+                                                                <select name="PaymentMethod" class="form-control" required title="<?php echo htmlspecialchars(paymentTypeText($row['InitialPaymentType'])); ?>: <?php echo formatMoney($row['InitialAmount']); ?>">
+                                                                    <option value="Cash">Tiền mặt</option>
+                                                                    <option value="BankTransfer">Chuyển khoản</option>
+                                                                </select>
+                                                                <div class="input-group-append">
+                                                                    <button type="submit" class="btn btn-warning" title="Xác nhận đã thu <?php echo htmlspecialchars(paymentTypeText($row['InitialPaymentType'])); ?> <?php echo formatMoney($row['InitialAmount']); ?>">
+                                                                        Thu cọc
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    <?php endif; ?>
+
+                                                    <?php if (($row['ReturnStatus'] ?? '') === 'Approved' && ($row['FinalPaymentStatus'] ?? '') === 'Pending'): ?>
+                                                        <form action="../../CarRental_Backend/api/admin/payments/confirm_final.php" method="POST">
+                                                            <?php echo csrf_field(); ?>
+                                                            <input type="hidden" name="PaymentID" value="<?php echo (int)$row['FinalPaymentID']; ?>">
+                                                            <input type="hidden" name="Redirect" value="list">
+                                                            <div class="input-group input-group-sm">
+                                                                <select name="PaymentMethod" class="form-control" required title="Thanh toán cuối: <?php echo formatMoney($row['FinalAmount']); ?>">
+                                                                    <option value="Cash">Tiền mặt</option>
+                                                                    <option value="BankTransfer">Chuyển khoản</option>
+                                                                </select>
+                                                                <div class="input-group-append">
+                                                                    <button type="submit" class="btn btn-warning" title="Xác nhận thanh toán cuối <?php echo formatMoney($row['FinalAmount']); ?>">
+                                                                        Thu cuối
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    <?php endif; ?>
+
+                                                    <?php if (in_array($current, ['Pending', 'Confirmed'], true)): ?>
+                                                        <form action="../../CarRental_Backend/api/admin/bookings/update.php" method="POST"
+                                                              onsubmit="return confirm('Hủy đơn #<?php echo (int)$row['BookingID']; ?>? Không thể hoàn tác.');">
+                                                            <?php echo csrf_field(); ?>
+                                                            <input type="hidden" name="BookingID" value="<?php echo (int)$row['BookingID']; ?>">
+                                                            <input type="hidden" name="Status" value="Cancelled">
+                                                            <input type="hidden" name="Redirect" value="list">
+                                                            <button type="submit" class="btn btn-outline-danger btn-sm btn-block">
+                                                                Hủy đơn
+                                                            </button>
+                                                        </form>
+                                                    <?php endif; ?>
+
+                                                </div>
                                             </td>
                                         </tr>
                                     <?php endwhile; ?>

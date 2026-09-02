@@ -1,6 +1,6 @@
 <?php
 require_once '../CarRental_Backend/config/auth.php';
-requireCustomer('login.php');
+requireLogin('login.php');
 require_once '../CarRental_Backend/config/database.php';
 
 $pageTitle = 'Gửi trả xe';
@@ -56,6 +56,7 @@ include 'includes/header.php';
             </div>
 
             <form id="returnForm" action="../CarRental_Backend/api/bookings/return_store.php" method="POST" enctype="multipart/form-data">
+                <?php echo csrf_field(); ?>
                 <input type="hidden" name="BookingID" value="<?php echo (int)$booking['BookingID']; ?>">
 
                 <div class="mb-3">

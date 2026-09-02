@@ -9,7 +9,9 @@ require_once '../../CarRental_Backend/config/database.php';
     <meta charset="UTF-8">
     <title>Thêm bài viết</title>
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="../vendor/nunito/nunito.css" rel="stylesheet">
     <link href="../css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="../css/admin-theme.css?v=4" rel="stylesheet">
 </head>
 <body id="page-top">
 <div id="wrapper">
@@ -25,6 +27,7 @@ require_once '../../CarRental_Backend/config/database.php';
                 <div class="card shadow">
                     <div class="card-body">
                         <form action="../../CarRental_Backend/api/admin/blogs/store.php" method="POST" enctype="multipart/form-data">
+                            <?php echo csrf_field(); ?>
                             <div class="row">
                                 <div class="col-md-9 form-group">
                                     <label>Tiêu đề</label>

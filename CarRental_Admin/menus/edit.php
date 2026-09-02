@@ -28,7 +28,9 @@ $parents = $conn->query("SELECT MenuID, MenuName FROM menus WHERE MenuID <> $id 
     <meta charset="UTF-8">
     <title>Sửa menu</title>
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="../vendor/nunito/nunito.css" rel="stylesheet">
     <link href="../css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="../css/admin-theme.css?v=4" rel="stylesheet">
 </head>
 <body id="page-top">
 <div id="wrapper">
@@ -42,6 +44,7 @@ $parents = $conn->query("SELECT MenuID, MenuName FROM menus WHERE MenuID <> $id 
                 <div class="card shadow">
                     <div class="card-body">
                         <form action="../../CarRental_Backend/api/admin/menus/update.php" method="POST">
+                            <?php echo csrf_field(); ?>
                             <input type="hidden" name="MenuID" value="<?php echo (int)$menu['MenuID']; ?>">
 
                             <div class="form-group">

@@ -10,7 +10,7 @@ if ($id <= 0) {
 }
 
 $stmt = $conn->prepare("
-    SELECT 
+    SELECT
         b.*,
         u.FullName,
         u.Email,
@@ -29,11 +29,31 @@ $stmt = $conn->prepare("
         fp.Status AS FinalPaymentStatus,
         fp.PaymentMethod AS FinalPaymentMethod,
         fp.PaymentDate AS FinalPaymentDate,
-        fp.TransactionCode AS FinalTransactionCode
+        fp.TransactionCode AS FinalTransactionCode,
+        ip.PaymentID AS InitialPaymentID,
+        ip.Amount AS InitialAmount,
+        ip.PaymentType AS InitialPaymentType,
+        ip.Status AS InitialPaymentStatus,
+        ip.PaymentMethod AS InitialPaymentMethod,
+        ip.PaymentDate AS InitialPaymentDate
     FROM bookings b
     LEFT JOIN users u ON b.UserID = u.UserID
     LEFT JOIN cars c ON b.CarID = c.CarID
     LEFT JOIN payments fp ON fp.BookingID = b.BookingID AND fp.PaymentType = 'Final'
+    LEFT JOIN payments ip ON ip.PaymentID = (
+        SELECT p.PaymentID
+        FROM payments p
+        WHERE p.BookingID = b.BookingID
+          AND p.PaymentType IN ('Deposit', 'Rental')
+        ORDER BY
+            CASE p.PaymentType
+                WHEN 'Deposit' THEN 1
+                WHEN 'Rental' THEN 2
+                ELSE 3
+            END,
+            p.PaymentID ASC
+        LIMIT 1
+    )
     WHERE b.BookingID = ?
     LIMIT 1
 ");
@@ -90,6 +110,41 @@ function paymentStatusClass($status) {
             return 'danger';
         default:
             return 'secondary';
+    }
+}
+
+/**
+ * Hien thi gia tri dang text tu DB, tra ve $fallback neu rong/NULL hoac
+ * chi la "0" (gia tri placeholder cu, khong phai du lieu that).
+ */
+function displayOrDefault($value, $fallback = 'Chưa có') {
+    $value = trim((string)($value ?? ''));
+    return ($value === '' || $value === '0') ? $fallback : $value;
+}
+
+function transmissionText($value) {
+    switch ($value) {
+        case 'Automatic':
+            return 'Số tự động';
+        case 'Manual':
+            return 'Số sàn';
+        default:
+            return displayOrDefault($value);
+    }
+}
+
+function fuelTypeText($value) {
+    switch ($value) {
+        case 'Gasoline':
+            return 'Xăng';
+        case 'Diesel':
+            return 'Dầu diesel';
+        case 'Electric':
+            return 'Điện';
+        case 'Hybrid':
+            return 'Hybrid';
+        default:
+            return displayOrDefault($value);
     }
 }
 
@@ -181,8 +236,10 @@ $remainingAmount = max(0, $grandTotal - $paidAmount);
     <title>Chi tiết đơn đặt xe</title>
 
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="../vendor/nunito/nunito.css" rel="stylesheet">
     <link href="../css/sb-admin-2.min.css" rel="stylesheet">
     <link href="../assets/css/booking-detail.css" rel="stylesheet">
+    <link href="../css/admin-theme.css?v=4" rel="stylesheet">
 </head>
 <body id="page-top">
 <div id="wrapper">
@@ -232,143 +289,139 @@ $remainingAmount = max(0, $grandTotal - $paidAmount);
 
                 <div class="row">
                     <div class="col-lg-5 mb-4">
-                        <div class="car-image-box">
-                            <?php if (!empty($booking['MainImage'])): ?>
-                                <img src="../../CarRental_Frontend/assets/img/cars/<?php echo htmlspecialchars($booking['MainImage']); ?>" alt="Car">
-                            <?php else: ?>
-                                <div class="car-image-placeholder">
-                                    <i class="fas fa-car"></i>
-                                    <span>Chưa có ảnh xe</span>
-                                </div>
-                            <?php endif; ?>
-                            <div class="car-body">
-                                <div class="car-compact-title">
-                                    <h5 class="font-weight-bold"><?php echo htmlspecialchars($booking['CarName'] ?? 'N/A'); ?></h5>
-                                    <span class="car-plate"><?php echo htmlspecialchars($booking['LicensePlate'] ?? ''); ?></span>
-                                </div>
+                        <div class="detail-sticky-col">
+                            <div class="car-image-box mb-4">
+                                <?php if (!empty($booking['MainImage'])): ?>
+                                    <img src="../../CarRental_Frontend/assets/img/cars/<?php echo htmlspecialchars($booking['MainImage']); ?>" alt="Car">
+                                <?php else: ?>
+                                    <div class="car-image-placeholder">
+                                        <i class="fas fa-car"></i>
+                                        <span>Chưa có ảnh xe</span>
+                                    </div>
+                                <?php endif; ?>
+                                <div class="car-body">
+                                    <div class="car-compact-title">
+                                        <h5 class="font-weight-bold"><?php echo htmlspecialchars($booking['CarName'] ?? 'N/A'); ?></h5>
+                                        <span class="car-plate"><?php echo htmlspecialchars($booking['LicensePlate'] ?? ''); ?></span>
+                                    </div>
 
-                                <div class="car-spec-grid">
-                                    <div class="car-spec-item">
-                                        <i class="fas fa-cogs"></i>
-                                        <div>
-                                            <span>Hộp số</span>
-                                            <strong><?php echo htmlspecialchars($booking['Transmission'] ?? 'N/A'); ?></strong>
+                                    <div class="car-spec-grid">
+                                        <div class="car-spec-item">
+                                            <i class="fas fa-cogs"></i>
+                                            <div>
+                                                <span>Hộp số</span>
+                                                <strong><?php echo htmlspecialchars(transmissionText($booking['Transmission'] ?? '')); ?></strong>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="car-spec-item">
-                                        <i class="fas fa-gas-pump"></i>
-                                        <div>
-                                            <span>Nhiên liệu</span>
-                                            <strong><?php echo htmlspecialchars($booking['FuelType'] ?? 'N/A'); ?></strong>
+                                        <div class="car-spec-item">
+                                            <i class="fas fa-gas-pump"></i>
+                                            <div>
+                                                <span>Nhiên liệu</span>
+                                                <strong><?php echo htmlspecialchars(fuelTypeText($booking['FuelType'] ?? '')); ?></strong>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="car-spec-item">
-                                        <i class="fas fa-users"></i>
-                                        <div>
-                                            <span>Số ghế</span>
-                                            <strong><?php echo (int)($booking['Seats'] ?? 0); ?> chỗ</strong>
+                                        <div class="car-spec-item">
+                                            <i class="fas fa-users"></i>
+                                            <div>
+                                                <span>Số ghế</span>
+                                                <strong><?php echo (int)($booking['Seats'] ?? 0); ?> chỗ</strong>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="car-spec-item">
-                                        <i class="fas fa-palette"></i>
-                                        <div>
-                                            <span>Màu xe</span>
-                                            <strong><?php echo htmlspecialchars($booking['Color'] ?? 'N/A'); ?></strong>
+                                        <div class="car-spec-item">
+                                            <i class="fas fa-palette"></i>
+                                            <div>
+                                                <span>Màu xe</span>
+                                                <strong><?php echo htmlspecialchars(displayOrDefault($booking['Color'] ?? '')); ?></strong>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="car-spec-item">
-                                        <i class="fas fa-map-marker-alt"></i>
-                                        <div>
-                                            <span>Vị trí xe</span>
-                                            <strong><?php echo htmlspecialchars($booking['Location'] ?? 'N/A'); ?></strong>
+                                        <div class="car-spec-item">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            <div>
+                                                <span>Vị trí xe</span>
+                                                <strong><?php echo htmlspecialchars(displayOrDefault($booking['Location'] ?? '')); ?></strong>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
+                            <div class="section-card mb-4">
+                                <div class="section-title">
+                                    <i class="fas fa-user text-primary"></i>
+                                    Thông tin khách hàng
+                                </div>
+                                <div class="info-row">
+                                    <div class="info-label">Họ tên</div>
+                                    <div class="info-value"><?php echo htmlspecialchars($booking['FullName'] ?? 'N/A'); ?></div>
+                                </div>
+                                <div class="info-row">
+                                    <div class="info-label">Email</div>
+                                    <div class="info-value"><?php echo htmlspecialchars($booking['Email'] ?? ''); ?></div>
+                                </div>
+                                <div class="info-row">
+                                    <div class="info-label">Số điện thoại</div>
+                                    <div class="info-value"><?php echo htmlspecialchars($booking['Phone'] ?? ''); ?></div>
+                                </div>
+                                <div class="info-row">
+                                    <div class="info-label">Địa chỉ</div>
+                                    <div class="info-value"><?php echo htmlspecialchars($booking['Address'] ?? ''); ?></div>
+                                </div>
+                            </div>
+
+                            <div class="section-card location-compact-card mb-4">
+                                <div class="section-title">
+                                    <i class="fas fa-route text-primary"></i>
+                                    Địa điểm giao nhận
+                                </div>
+                                <div class="location-list">
+                                    <div class="location-item">
+                                        <div class="location-icon">
+                                            <i class="fas fa-sign-out-alt"></i>
+                                        </div>
+                                        <div>
+                                            <span>Nhận xe</span>
+                                            <strong><?php echo htmlspecialchars($booking['PickupLocation']); ?></strong>
+                                        </div>
+                                    </div>
+                                    <div class="location-item">
+                                        <div class="location-icon">
+                                            <i class="fas fa-sign-in-alt"></i>
+                                        </div>
+                                        <div>
+                                            <span>Trả xe</span>
+                                            <strong><?php echo htmlspecialchars($booking['ReturnLocation']); ?></strong>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="section-card">
+                                <div class="section-title">
+                                    <i class="fas fa-calendar-alt text-primary"></i>
+                                    Thời gian thuê
+                                </div>
+                                <div class="info-row">
+                                    <div class="info-label">Ngày nhận</div>
+                                    <div class="info-value"><?php echo htmlspecialchars($booking['StartDate']); ?></div>
+                                </div>
+                                <div class="info-row">
+                                    <div class="info-label">Ngày trả</div>
+                                    <div class="info-value"><?php echo htmlspecialchars($booking['EndDate']); ?></div>
+                                </div>
+                                <div class="info-row">
+                                    <div class="info-label">Số ngày</div>
+                                    <div class="info-value"><?php echo (int)$booking['RentalDays']; ?> ngày</div>
+                                </div>
+                                <div class="info-row">
+                                    <div class="info-label">Ngày tạo đơn</div>
+                                    <div class="info-value"><?php echo htmlspecialchars($booking['CreatedAt']); ?></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="col-lg-7">
                         <div class="row">
-                            <div class="col-md-6 mb-4">
-                                <div class="section-card location-compact-card location-card-inline">
-                                    <div class="section-title">
-                                        <i class="fas fa-route text-primary"></i>
-                                        Địa điểm giao nhận
-                                    </div>
-                                    <div class="location-list">
-                                        <div class="location-item">
-                                            <div class="location-icon">
-                                                <i class="fas fa-sign-out-alt"></i>
-                                            </div>
-                                            <div>
-                                                <span>Nhận xe</span>
-                                                <strong><?php echo htmlspecialchars($booking['PickupLocation']); ?></strong>
-                                            </div>
-                                        </div>
-                                        <div class="location-item">
-                                            <div class="location-icon">
-                                                <i class="fas fa-sign-in-alt"></i>
-                                            </div>
-                                            <div>
-                                                <span>Trả xe</span>
-                                                <strong><?php echo htmlspecialchars($booking['ReturnLocation']); ?></strong>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6 mb-4">
-                                <div class="section-card">
-                                    <div class="section-title">
-                                        <i class="fas fa-user text-primary"></i>
-                                        Thông tin khách hàng
-                                    </div>
-                                    <div class="info-row">
-                                        <div class="info-label">Họ tên</div>
-                                        <div class="info-value"><?php echo htmlspecialchars($booking['FullName'] ?? 'N/A'); ?></div>
-                                    </div>
-                                    <div class="info-row">
-                                        <div class="info-label">Email</div>
-                                        <div class="info-value"><?php echo htmlspecialchars($booking['Email'] ?? ''); ?></div>
-                                    </div>
-                                    <div class="info-row">
-                                        <div class="info-label">Số điện thoại</div>
-                                        <div class="info-value"><?php echo htmlspecialchars($booking['Phone'] ?? ''); ?></div>
-                                    </div>
-                                    <div class="info-row">
-                                        <div class="info-label">Địa chỉ</div>
-                                        <div class="info-value"><?php echo htmlspecialchars($booking['Address'] ?? ''); ?></div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6 mb-4">
-                                <div class="section-card">
-                                    <div class="section-title">
-                                        <i class="fas fa-calendar-alt text-primary"></i>
-                                        Thời gian thuê
-                                    </div>
-                                    <div class="info-row">
-                                        <div class="info-label">Ngày nhận</div>
-                                        <div class="info-value"><?php echo htmlspecialchars($booking['StartDate']); ?></div>
-                                    </div>
-                                    <div class="info-row">
-                                        <div class="info-label">Ngày trả</div>
-                                        <div class="info-value"><?php echo htmlspecialchars($booking['EndDate']); ?></div>
-                                    </div>
-                                    <div class="info-row">
-                                        <div class="info-label">Số ngày</div>
-                                        <div class="info-value"><?php echo (int)$booking['RentalDays']; ?> ngày</div>
-                                    </div>
-                                    <div class="info-row">
-                                        <div class="info-label">Ngày tạo đơn</div>
-                                        <div class="info-value"><?php echo htmlspecialchars($booking['CreatedAt']); ?></div>
-                                    </div>
-                                </div>
-                            </div>
 
                             <div class="col-12 mb-4">
                                 <div class="section-card">
@@ -464,6 +517,51 @@ $remainingAmount = max(0, $grandTotal - $paidAmount);
                                 </div>
                             </div>
 
+                            <?php if (($booking['ReturnStatus'] ?? '') === 'Pending'): ?>
+                                <div class="col-12 mb-4">
+                                    <div class="section-card final-payment-card">
+                                        <div class="section-title">
+                                            <i class="fas fa-clipboard-check text-primary"></i>
+                                            Khách đã gửi yêu cầu trả xe
+                                        </div>
+                                        <p class="text-muted mb-3">Kiểm tra ảnh đầu/sau xe khách gửi lên và nhập phí phát sinh (nếu có) trước khi xác nhận.</p>
+                                        <a href="return_check.php?id=<?php echo (int)$booking['BookingID']; ?>" class="btn btn-success">
+                                            <i class="fas fa-clipboard-check mr-1"></i> Kiểm tra trả xe
+                                        </a>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+
+                            <?php if (($booking['InitialPaymentStatus'] ?? '') === 'Pending' && !in_array($booking['Status'], ['Cancelled', 'Completed'], true)): ?>
+                                <div class="col-12 mb-4">
+                                    <div class="section-card final-payment-card">
+                                        <div class="section-title">
+                                            <i class="fas fa-cash-register text-primary"></i>
+                                            Xác nhận thanh toán <?php echo mb_strtolower(paymentTypeText($booking['InitialPaymentType']), 'UTF-8'); ?>
+                                        </div>
+                                        <form action="../../CarRental_Backend/api/admin/payments/confirm.php" method="POST" class="row">
+                                            <?php echo csrf_field(); ?>
+                                            <input type="hidden" name="PaymentID" value="<?php echo (int)$booking['InitialPaymentID']; ?>">
+                                            <input type="hidden" name="Redirect" value="detail">
+                                            <div class="col-md-4 mb-2">
+                                                <input type="text" class="form-control" value="<?php echo formatMoney($booking['InitialAmount']); ?>" disabled>
+                                            </div>
+                                            <div class="col-md-4 mb-2">
+                                                <select name="PaymentMethod" class="form-control" required>
+                                                    <option value="Cash">Tiền mặt</option>
+                                                    <option value="BankTransfer">Chuyển khoản</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-4 mb-2">
+                                                <button type="submit" class="btn btn-warning btn-block">
+                                                    Xác nhận đã thu
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+
                             <?php if (($booking['ReturnStatus'] ?? '') === 'Approved' && ($booking['FinalPaymentStatus'] ?? '') === 'Pending'): ?>
                                 <div class="col-12 mb-4">
                                     <div class="section-card final-payment-card">
@@ -472,6 +570,7 @@ $remainingAmount = max(0, $grandTotal - $paidAmount);
                                             Xác nhận thanh toán cuối
                                         </div>
                                         <form action="../../CarRental_Backend/api/admin/payments/confirm_final.php" method="POST" class="row">
+                                            <?php echo csrf_field(); ?>
                                             <input type="hidden" name="PaymentID" value="<?php echo (int)$booking['FinalPaymentID']; ?>">
                                             <input type="hidden" name="Redirect" value="detail">
                                             <div class="col-md-4 mb-2">
@@ -505,51 +604,28 @@ $remainingAmount = max(0, $grandTotal - $paidAmount);
                                 </div>
                             </div>
 
-                            <div class="col-12 mb-4">
-                                <div class="section-card status-update-card">
-                                    <div class="section-title">
-                                        <i class="fas fa-edit text-primary"></i>
-                                        Cập nhật trạng thái
-                                    </div>
-
-                                    <form action="../../CarRental_Backend/api/admin/bookings/update.php" method="POST" class="row">
-                                        <input type="hidden" name="BookingID" value="<?php echo (int)$booking['BookingID']; ?>">
-                                        <input type="hidden" name="Redirect" value="detail">
-
-                                        <div class="col-md-8 mb-2">
-                                            <?php $current = $booking['Status']; ?>
-                                            <select name="Status" class="form-control"
-                                                <?php echo in_array($current, ['Paid', 'Completed', 'Cancelled']) ? 'disabled' : ''; ?>>
-
-                                                <?php if ($current === 'Pending'): ?>
-                                                    <option value="Pending" selected>Chưa giải quyết</option>
-                                                    <option value="Cancelled">Đã hủy</option>
-
-                                                <?php elseif ($current === 'Confirmed'): ?>
-                                                    <option value="Confirmed" selected>Đã xác nhận</option>
-                                                    <option value="Cancelled">Đã hủy</option>
-
-                                                <?php elseif ($current === 'Paid'): ?>
-                                                    <option value="Paid" selected>Đã thanh toán</option>
-
-                                                <?php elseif ($current === 'Completed'): ?>
-                                                    <option value="Completed" selected>Hoàn thành</option>
-
-                                                <?php elseif ($current === 'Cancelled'): ?>
-                                                    <option value="Cancelled" selected>Đã hủy</option>
-                                                <?php endif; ?>
-                                            </select>
+                            <?php $current = $booking['Status']; ?>
+                            <?php if (in_array($current, ['Pending', 'Confirmed'], true)): ?>
+                                <div class="col-12 mb-4">
+                                    <div class="section-card status-update-card">
+                                        <div class="section-title">
+                                            <i class="fas fa-edit text-primary"></i>
+                                            Hủy đơn
                                         </div>
-
-                                        <div class="col-md-4 mb-2">
-                                            <button type="submit" class="btn btn-primary btn-block"
-                                                <?php echo in_array($current, ['Paid', 'Completed', 'Cancelled']) ? 'disabled' : ''; ?>>
-                                                Cập nhật
+                                        <p class="text-muted mb-3">Đơn đang ở trạng thái "<?php echo htmlspecialchars($statusText); ?>", vẫn có thể hủy nếu cần.</p>
+                                        <form action="../../CarRental_Backend/api/admin/bookings/update.php" method="POST"
+                                              onsubmit="return confirm('Hủy đơn #<?php echo (int)$booking['BookingID']; ?>? Không thể hoàn tác.');">
+                                            <?php echo csrf_field(); ?>
+                                            <input type="hidden" name="BookingID" value="<?php echo (int)$booking['BookingID']; ?>">
+                                            <input type="hidden" name="Status" value="Cancelled">
+                                            <input type="hidden" name="Redirect" value="detail">
+                                            <button type="submit" class="btn btn-outline-danger">
+                                                <i class="fas fa-times mr-1"></i> Hủy đơn này
                                             </button>
-                                        </div>
-                                    </form>
+                                        </form>
+                                    </div>
                                 </div>
-                            </div>
+                            <?php endif; ?>
 
                         </div>
                     </div>

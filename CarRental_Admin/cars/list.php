@@ -31,7 +31,7 @@ if ($keyword != '') {
     <title>Quản lý xe</title>
 
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,700,800,900" rel="stylesheet">
+    <link href="../vendor/nunito/nunito.css" rel="stylesheet">
     <link href="../css/sb-admin-2.min.css" rel="stylesheet">
     <link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     <link href="../assets/css/cars-admin.css?v=1" rel="stylesheet">
@@ -40,6 +40,7 @@ if ($keyword != '') {
     <style>
         
     </style>
+    <link href="../css/admin-theme.css?v=4" rel="stylesheet">
 </head>
 
 <body id="page-top">
@@ -62,9 +63,6 @@ if ($keyword != '') {
                 </div>
 
                 <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Quản lý danh sách xe</h6>
-                    </div>
                     <div class="card-body">
                         <form method="GET" class="mb-4">
                             <div class="input-group">
@@ -161,7 +159,7 @@ if ($keyword != '') {
                                                 <a href="edit.php?id=<?php echo $row['CarID']; ?>" class="btn btn-warning btn-sm">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
-                                                <a href="../../CarRental_Backend/api/admin/cars/delete.php?id=<?php echo $row['CarID']; ?>"
+                                                <a href="<?php echo csrf_url('../../CarRental_Backend/api/admin/cars/delete.php?id=' . (int)$row['CarID']); ?>"
                                                    class="btn btn-danger btn-sm"
                                                    onclick="return confirm('Bạn có chắc muốn xóa xe này không?');">
                                                     <i class="fas fa-trash"></i>

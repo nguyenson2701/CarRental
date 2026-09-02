@@ -2,6 +2,7 @@
 require_once '../../../config/auth.php';
 requireAdminOrStaff('../../../../CarRental_Admin/login.php');
 require_once '../../../config/database.php';
+require_once '../../../helpers/upload.php';
 
 $id            = (int)($_POST['CarID'] ?? 0);
 $carName       = trim($_POST['CarName'] ?? '');
@@ -93,15 +94,14 @@ if (!empty($_FILES['Images']['name'][0])) {
         }
 
         $ext = strtolower(pathinfo($originalName, PATHINFO_EXTENSION));
-        if (!in_array($ext, $allowedExt, true)) {
+        $tmpName = $_FILES['Images']['tmp_name'][$index];
+        if (!isRealImageUpload($tmpName, $ext, $allowedExt)) {
             continue;
         }
 
-        $safeName = preg_replace('/[^a-zA-Z0-9_\-\.]/', '_', basename($originalName));
-        $newFileName = time() . '_' . ($index + 1) . '_' . $safeName;
-        $targetPath = $carFolderPath . '/' . $newFileName;
+        $newFileName = moveValidatedUpload($tmpName, $carFolderPath, 'img_' . ($index + 1), $ext);
 
-        if (move_uploaded_file($_FILES['Images']['tmp_name'][$index], $targetPath)) {
+        if ($newFileName !== false) {
             $imageUrl = $folderName . '/' . $newFileName;
             $isMain = $hasMain ? 0 : 1;
             $imageType = 'gallery';

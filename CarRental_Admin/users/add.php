@@ -10,8 +10,9 @@ requireAdminOrStaff('../login.php');
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet">
+    <link href="../vendor/nunito/nunito.css" rel="stylesheet">
     <link href="../css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="../css/admin-theme.css?v=4" rel="stylesheet">
 </head>
 <body id="page-top">
 <div id="wrapper">
@@ -28,6 +29,7 @@ requireAdminOrStaff('../login.php');
                 <div class="card shadow mb-4">
                     <div class="card-body">
                         <form action="../../CarRental_Backend/api/admin/users/store.php" method="POST" enctype="multipart/form-data">
+                            <?php echo csrf_field(); ?>
                             <div class="row">
                                 <div class="col-md-6 form-group">
                                     <label>Họ tên</label>
@@ -36,7 +38,7 @@ requireAdminOrStaff('../login.php');
 
                                 <div class="col-md-6 form-group">
                                     <label>Ảnh avatar</label>
-                                    <input type="file" name="MainImage" class="form-control-file" accept="image/*">
+                                    <input type="file" name="Avatar" class="form-control-file" accept="image/*">
                                 </div>
                                 <div class="col-md-6 form-group">
                                     <label>Ảnh GPLX mặt trước</label>
@@ -59,7 +61,7 @@ requireAdminOrStaff('../login.php');
 
                                 <div class="col-md-6 form-group">
                                     <label>Mật khẩu</label>
-                                    <input type="text" name="PasswordHash" class="form-control" required>
+                                    <input type="password" name="PasswordHash" class="form-control" autocomplete="new-password" required>
                                 </div>
 
                                 <div class="col-md-6 form-group">

@@ -1,5 +1,6 @@
 <?php
 require_once '../CarRental_Backend/config/database.php';
+require_once '../CarRental_Backend/config/auth.php';
 
 $pageTitle = 'Đặt xe - VinaDrive';
 $activePage = 'vehicle';
@@ -118,6 +119,7 @@ $resultImgs = $stmtImgs->get_result();
                     <div class="booking-form-subtitle">Điền đầy đủ thông tin để kiểm tra lịch trống và gửi yêu cầu đặt xe.</div>
 
                     <form action="../CarRental_Backend/api/bookings/store.php" method="POST" id="bookingForm">
+                        <?php echo csrf_field(); ?>
                         <input type="hidden"
                             name="CarID"
                             id="CarID"
