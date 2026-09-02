@@ -19,6 +19,8 @@ use App\Controllers\Admin\UserController;
 use App\Controllers\Admin\BlogController;
 use App\Controllers\Admin\MenuController;
 use App\Controllers\Admin\DashboardController;
+use App\Controllers\Admin\BookingController;
+use App\Controllers\Admin\PaymentController;
 
 const BASE_PATH = '/Carrental';
 
@@ -69,5 +71,16 @@ $router->post('/admin/menus/{id}/delete', [MenuController::class, 'destroy']);
 
 // --- Dashboard ---
 $router->get('/admin/dashboard', [DashboardController::class, 'index']);
+
+// --- Don dat xe ---
+$router->get('/admin/bookings', [BookingController::class, 'index']);
+$router->get('/admin/bookings/{id}', [BookingController::class, 'show']);
+$router->get('/admin/bookings/{id}/return-check', [BookingController::class, 'returnCheck']);
+$router->post('/admin/bookings/{id}/cancel', [BookingController::class, 'cancel']);
+$router->post('/admin/bookings/{id}/return-approve', [BookingController::class, 'returnApprove']);
+
+// --- Thanh toan (xac nhan tu phia admin) ---
+$router->post('/admin/payments/{id}/confirm', [PaymentController::class, 'confirm']);
+$router->post('/admin/payments/{id}/confirm-final', [PaymentController::class, 'confirmFinal']);
 
 $router->dispatch(BASE_PATH);

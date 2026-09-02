@@ -17,10 +17,6 @@
  * @var array $revenue
  * @var bool $updated
  * @var bool $finalPaid
- *
- * Ghi chu: module Booking chua chuyen sang MVC nen cac lien ket lien quan
- * den don dat xe van tro ve trang cu (CarRental_Admin/bookings/...) - se
- * cap nhat lai khi module Booking hoan tat.
  */
 
 function money($value): string
@@ -94,7 +90,7 @@ function userStatusBadgeClass(string $status): string
 ?>
 <div class="dashboard-heading">
     <div class="dashboard-heading-actions">
-        <a href="/Carrental/CarRental_Admin/bookings/list.php" class="btn btn-danger btn-sm">
+        <a href="/Carrental/admin/bookings" class="btn btn-danger btn-sm">
             <i class="fas fa-calendar-check mr-1"></i> Quản lý đơn
         </a>
         <a href="/Carrental/admin/cars" class="btn btn-outline-primary btn-sm">
@@ -122,24 +118,24 @@ function userStatusBadgeClass(string $status): string
             <h2>Thông báo</h2>
             <p>Các việc cần xử lý trong hệ thống</p>
         </div>
-        <a href="/Carrental/CarRental_Admin/bookings/list.php" class="btn btn-sm btn-outline-primary">Xem đơn đặt xe</a>
+        <a href="/Carrental/admin/bookings" class="btn btn-sm btn-outline-primary">Xem đơn đặt xe</a>
     </div>
     <div class="dashboard-card-body">
         <div class="row notification-list">
             <div class="col-xl-3 col-md-6 mb-3 mb-xl-0">
-                <a href="/Carrental/CarRental_Admin/bookings/list.php" class="notification-item notification-warning">
+                <a href="/Carrental/admin/bookings" class="notification-item notification-warning">
                     <span class="notification-icon"><i class="fas fa-clock"></i></span>
                     <span><strong><?= $pendingBookingsCount ?></strong><small>Đơn mới chờ xử lý</small></span>
                 </a>
             </div>
             <div class="col-xl-3 col-md-6 mb-3 mb-xl-0">
-                <a href="/Carrental/CarRental_Admin/bookings/list.php" class="notification-item notification-info">
+                <a href="/Carrental/admin/bookings" class="notification-item notification-info">
                     <span class="notification-icon"><i class="fas fa-clipboard-check"></i></span>
                     <span><strong><?= $pendingReturnsCount ?></strong><small>Đơn chờ kiểm tra trả xe</small></span>
                 </a>
             </div>
             <div class="col-xl-3 col-md-6 mb-3 mb-md-0">
-                <a href="/Carrental/CarRental_Admin/bookings/list.php" class="notification-item notification-danger">
+                <a href="/Carrental/admin/bookings" class="notification-item notification-danger">
                     <span class="notification-icon"><i class="fas fa-cash-register"></i></span>
                     <span><strong><?= $pendingFinalPaymentsCount ?></strong><small>Thanh toán cuối chờ xác nhận</small></span>
                 </a>
@@ -164,7 +160,7 @@ function userStatusBadgeClass(string $status): string
         </a>
     </div>
     <div class="col-xl-3 col-md-6 mb-4">
-        <a href="/Carrental/CarRental_Admin/bookings/list.php" class="text-decoration-none">
+        <a href="/Carrental/admin/bookings" class="text-decoration-none">
             <div class="stat-card stat-danger">
                 <div><div class="stat-label">Đơn đặt xe</div><div class="stat-value"><?= $totalBookings ?></div></div>
                 <span class="stat-icon"><i class="fas fa-file-invoice"></i></span>
@@ -250,7 +246,7 @@ function userStatusBadgeClass(string $status): string
                         <td class="text-right font-weight-bold text-success"><?= money($row['TotalPrice']) ?></td>
                         <td><span class="badge badge-<?= bookingBadgeClass($row['Status']) ?>"><?= bookingStatusText($row['Status']) ?></span></td>
                         <td>
-                            <a href="/Carrental/CarRental_Admin/bookings/detail.php?id=<?= (int) $row['BookingID'] ?>" class="btn btn-info btn-sm">
+                            <a href="/Carrental/admin/bookings/<?= (int) $row['BookingID'] ?>" class="btn btn-info btn-sm">
                                 <i class="fas fa-eye mr-1"></i> Xem
                             </a>
                         </td>
@@ -310,7 +306,7 @@ function userStatusBadgeClass(string $status): string
         <div class="dashboard-card h-100">
             <div class="dashboard-card-header">
                 <div><h2>Đơn gần đây</h2><p>5 đơn đặt xe mới nhất</p></div>
-                <a href="/Carrental/CarRental_Admin/bookings/list.php" class="btn btn-sm btn-outline-danger">Xem tất cả</a>
+                <a href="/Carrental/admin/bookings" class="btn btn-sm btn-outline-danger">Xem tất cả</a>
             </div>
             <div class="dashboard-card-body table-responsive p-0">
                 <table class="table admin-table table-hover mb-0">

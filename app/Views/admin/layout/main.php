@@ -29,6 +29,7 @@ function navActive(string $prefix, string $currentPath): string
     <link href="/Carrental/CarRental_Admin/css/admin-theme.css" rel="stylesheet">
     <link href="/Carrental/CarRental_Admin/css/cars-admin.css" rel="stylesheet">
     <link href="/Carrental/CarRental_Admin/css/admin-dashboard.css" rel="stylesheet">
+    <link href="/Carrental/CarRental_Admin/css/booking-detail.css" rel="stylesheet">
 </head>
 <body id="page-top">
 <div id="wrapper">
