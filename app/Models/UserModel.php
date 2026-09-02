@@ -27,4 +27,28 @@ class UserModel extends Model
         $stmt->execute();
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
+
+    public function findByEmail(string $email): ?array
+    {
+        $stmt = $this->db->prepare('SELECT * FROM users WHERE Email = ? LIMIT 1');
+        $stmt->bind_param('s', $email);
+        $stmt->execute();
+        $row = $stmt->get_result()->fetch_assoc();
+        return $row ?: null;
+    }
+
+    public function existsByEmailOrPhone(string $email, string $phone): bool
+    {
+        $stmt = $this->db->prepare('SELECT UserID FROM users WHERE Email = ? OR Phone = ? LIMIT 1');
+        $stmt->bind_param('ss', $email, $phone);
+        $stmt->execute();
+        return $stmt->get_result()->num_rows > 0;
+    }
+
+    public function updatePasswordHash(int $userId, string $newHash): void
+    {
+        $stmt = $this->db->prepare('UPDATE users SET PasswordHash = ? WHERE UserID = ?');
+        $stmt->bind_param('si', $newHash, $userId);
+        $stmt->execute();
+    }
 }

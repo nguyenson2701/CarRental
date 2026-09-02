@@ -21,6 +21,7 @@ use App\Controllers\Admin\MenuController;
 use App\Controllers\Admin\DashboardController;
 use App\Controllers\Admin\BookingController;
 use App\Controllers\Admin\PaymentController;
+use App\Controllers\Frontend\AuthController;
 
 const BASE_PATH = '/Carrental';
 
@@ -82,5 +83,12 @@ $router->post('/admin/bookings/{id}/return-approve', [BookingController::class, 
 // --- Thanh toan (xac nhan tu phia admin) ---
 $router->post('/admin/payments/{id}/confirm', [PaymentController::class, 'confirm']);
 $router->post('/admin/payments/{id}/confirm-final', [PaymentController::class, 'confirmFinal']);
+
+// --- Dang nhap / dang ky / dang xuat ---
+$router->get('/login', [AuthController::class, 'showLogin']);
+$router->post('/login', [AuthController::class, 'login']);
+$router->get('/register', [AuthController::class, 'showRegister']);
+$router->post('/register', [AuthController::class, 'register']);
+$router->get('/logout', [AuthController::class, 'logout']);
 
 $router->dispatch(BASE_PATH);

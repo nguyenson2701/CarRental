@@ -77,7 +77,7 @@ function navActive(string $prefix, string $currentPath): string
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="/Carrental/admin/logout">
+            <a class="nav-link" href="/Carrental/logout">
                 <i class="fas fa-fw fa-sign-out-alt"></i><span>Đăng xuất</span>
             </a>
         </li>
