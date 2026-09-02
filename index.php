@@ -17,6 +17,7 @@ use App\Controllers\Admin\BrandController;
 use App\Controllers\Admin\CarController;
 use App\Controllers\Admin\UserController;
 use App\Controllers\Admin\BlogController;
+use App\Controllers\Admin\MenuController;
 
 const BASE_PATH = '/Carrental';
 
@@ -56,5 +57,13 @@ $router->post('/admin/blogs', [BlogController::class, 'store']);
 $router->get('/admin/blogs/{id}/edit', [BlogController::class, 'edit']);
 $router->post('/admin/blogs/{id}/update', [BlogController::class, 'update']);
 $router->post('/admin/blogs/{id}/delete', [BlogController::class, 'destroy']);
+
+// --- Menu ---
+$router->get('/admin/menus', [MenuController::class, 'index']);
+$router->get('/admin/menus/create', [MenuController::class, 'create']);
+$router->post('/admin/menus', [MenuController::class, 'store']);
+$router->get('/admin/menus/{id}/edit', [MenuController::class, 'edit']);
+$router->post('/admin/menus/{id}/update', [MenuController::class, 'update']);
+$router->post('/admin/menus/{id}/delete', [MenuController::class, 'destroy']);
 
 $router->dispatch(BASE_PATH);
