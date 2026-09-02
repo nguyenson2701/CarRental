@@ -15,6 +15,7 @@ require_once __DIR__ . '/app/autoload.php';
 use App\Core\Router;
 use App\Controllers\Admin\BrandController;
 use App\Controllers\Admin\CarController;
+use App\Controllers\Admin\UserController;
 
 const BASE_PATH = '/Carrental';
 
@@ -38,5 +39,13 @@ $router->post('/admin/cars/{id}/delete', [CarController::class, 'destroy']);
 $router->post('/admin/cars/{id}/images/update', [CarController::class, 'updateImage']);
 $router->post('/admin/cars/{id}/images/set-main', [CarController::class, 'setMainImage']);
 $router->post('/admin/cars/{id}/images/delete', [CarController::class, 'deleteImage']);
+
+// --- Nguoi dung ---
+$router->get('/admin/users', [UserController::class, 'index']);
+$router->get('/admin/users/create', [UserController::class, 'create']);
+$router->post('/admin/users', [UserController::class, 'store']);
+$router->get('/admin/users/{id}/edit', [UserController::class, 'edit']);
+$router->post('/admin/users/{id}/update', [UserController::class, 'update']);
+$router->post('/admin/users/{id}/delete', [UserController::class, 'destroy']);
 
 $router->dispatch(BASE_PATH);
