@@ -14,17 +14,29 @@ require_once __DIR__ . '/app/autoload.php';
 
 use App\Core\Router;
 use App\Controllers\Admin\BrandController;
+use App\Controllers\Admin\CarController;
 
 const BASE_PATH = '/Carrental';
 
 $router = new Router();
 
-// --- Hang xe (module mau) ---
+// --- Hang xe ---
 $router->get('/admin/brands', [BrandController::class, 'index']);
 $router->get('/admin/brands/create', [BrandController::class, 'create']);
 $router->post('/admin/brands', [BrandController::class, 'store']);
 $router->get('/admin/brands/{id}/edit', [BrandController::class, 'edit']);
 $router->post('/admin/brands/{id}/update', [BrandController::class, 'update']);
 $router->post('/admin/brands/{id}/delete', [BrandController::class, 'destroy']);
+
+// --- Xe ---
+$router->get('/admin/cars', [CarController::class, 'index']);
+$router->get('/admin/cars/create', [CarController::class, 'create']);
+$router->post('/admin/cars', [CarController::class, 'store']);
+$router->get('/admin/cars/{id}/edit', [CarController::class, 'edit']);
+$router->post('/admin/cars/{id}/update', [CarController::class, 'update']);
+$router->post('/admin/cars/{id}/delete', [CarController::class, 'destroy']);
+$router->post('/admin/cars/{id}/images/update', [CarController::class, 'updateImage']);
+$router->post('/admin/cars/{id}/images/set-main', [CarController::class, 'setMainImage']);
+$router->post('/admin/cars/{id}/images/delete', [CarController::class, 'deleteImage']);
 
 $router->dispatch(BASE_PATH);
