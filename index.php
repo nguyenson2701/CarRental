@@ -22,6 +22,8 @@ use App\Controllers\Admin\DashboardController;
 use App\Controllers\Admin\BookingController;
 use App\Controllers\Admin\PaymentController;
 use App\Controllers\Frontend\AuthController;
+use App\Controllers\Frontend\PageController;
+use App\Controllers\Frontend\BlogController as FrontendBlogController;
 
 const BASE_PATH = '/Carrental';
 
@@ -90,5 +92,12 @@ $router->post('/login', [AuthController::class, 'login']);
 $router->get('/register', [AuthController::class, 'showRegister']);
 $router->post('/register', [AuthController::class, 'register']);
 $router->get('/logout', [AuthController::class, 'logout']);
+
+// --- Trang tinh + Blog Frontend ---
+$router->get('/', [PageController::class, 'index']);
+$router->get('/about', [PageController::class, 'about']);
+$router->get('/contact', [PageController::class, 'contact']);
+$router->get('/blog', [FrontendBlogController::class, 'index']);
+$router->get('/blog/{slug}', [FrontendBlogController::class, 'show']);
 
 $router->dispatch(BASE_PATH);
