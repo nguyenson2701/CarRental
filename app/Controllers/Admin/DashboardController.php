@@ -16,7 +16,7 @@ class DashboardController extends Controller
     public function __construct()
     {
         Auth::start();
-        Auth::requireAdminOrStaff('/Carrental/CarRental_Admin/login.php');
+        Auth::requireAdminOrStaff('/Carrental/login');
 
         // Tu dong cap nhat trang thai xe theo don dat con hieu luc, giu dung
         // hanh vi cu (file nay dung bien $conn toan cuc tu config/database.php).

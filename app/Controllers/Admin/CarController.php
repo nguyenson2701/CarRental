@@ -30,7 +30,7 @@ class CarController extends Controller
     public function __construct()
     {
         Auth::start();
-        Auth::requireAdminOrStaff('/Carrental/CarRental_Admin/login.php');
+        Auth::requireAdminOrStaff('/Carrental/login');
         $this->carModel = new CarModel();
         $this->carImageModel = new CarImageModel();
         $this->brandModel = new BrandModel();

@@ -17,7 +17,7 @@ class PaymentController extends Controller
     public function __construct()
     {
         Auth::start();
-        Auth::requireAdminOrStaff('/Carrental/CarRental_Admin/login.php');
+        Auth::requireAdminOrStaff('/Carrental/login');
         $this->paymentModel = new PaymentModel();
     }
 

@@ -59,7 +59,7 @@ use App\Core\Auth;
                                     <?php endif; ?>
                                 </td>
                                 <td>
-                                    <a href="/Carrental/CarRental_Frontend/blog-detail.php?slug=<?= urlencode($row['Slug']) ?>" target="_blank" class="btn btn-info btn-sm">Xem</a>
+                                    <a href="/Carrental/blog/<?= urlencode($row['Slug']) ?>" target="_blank" class="btn btn-info btn-sm">Xem</a>
                                     <a href="/Carrental/admin/blogs/<?= (int) $row['BlogID'] ?>/edit" class="btn btn-warning btn-sm">Sửa</a>
                                     <form action="/Carrental/admin/blogs/<?= (int) $row['BlogID'] ?>/delete" method="POST"
                                           class="d-inline" onsubmit="return confirm('Ban co chac muon xoa bai viet nay?');">

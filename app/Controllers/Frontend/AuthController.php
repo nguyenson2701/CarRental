@@ -26,7 +26,7 @@ class AuthController extends Controller
         // Giu dung hanh vi cu: dang la admin/staff ma vao lai /login thi
         // bi day ve trang chu Frontend (khong phai trang admin).
         if (Auth::isLoggedIn() && (Auth::isAdmin() || Auth::isStaff())) {
-            $this->redirect('/Carrental/CarRental_Frontend/index.php');
+            $this->redirect('/Carrental/');
         }
 
         $error = $_SESSION['login_error'] ?? '';
@@ -71,7 +71,7 @@ class AuthController extends Controller
         if ($roleId === 1 || $roleId === 2) {
             $this->redirect('/Carrental/admin/dashboard');
         } elseif ($roleId === 3) {
-            $this->redirect('/Carrental/CarRental_Frontend/index.php');
+            $this->redirect('/Carrental/');
         } else {
             $_SESSION['login_error'] = 'Tài khoản chưa được gán quyền hợp lệ!';
             $this->redirect('/Carrental/login');
@@ -84,7 +84,7 @@ class AuthController extends Controller
             if (Auth::isAdmin() || Auth::isStaff()) {
                 $this->redirect('/Carrental/admin/dashboard');
             } elseif (Auth::isCustomer()) {
-                $this->redirect('/Carrental/CarRental_Frontend/index.php');
+                $this->redirect('/Carrental/');
             }
         }
 

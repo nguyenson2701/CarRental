@@ -72,7 +72,7 @@ function navActive(string $prefix, string $currentPath): string
         <hr class="sidebar-divider">
         <div class="sidebar-heading">Website</div>
         <li class="nav-item">
-            <a class="nav-link" href="/Carrental/CarRental_Frontend/index.php" target="_blank">
+            <a class="nav-link" href="/Carrental/" target="_blank">
                 <i class="fas fa-fw fa-home"></i><span>Xem website</span>
             </a>
         </li>

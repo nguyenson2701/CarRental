@@ -1,0 +1,5 @@
+# Chan truy cap web truc tiep vao toan bo thu muc nay. Cac file trong day
+# (Core/Controllers/Models/Views) chi duoc goi tu ben trong server thong
+# qua index.php (front controller) + autoloader - khong file nao o day
+# duoc thiet ke de nguoi dung go thang URL vao.
+Require all denied
