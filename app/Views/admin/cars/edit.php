@@ -161,7 +161,7 @@ $carId = (int) $car['CarID'];
                                 <?php if ((int) $img['IsMain'] === 1): ?>
                                     <span class="badge-main">Ảnh chính</span>
                                 <?php endif; ?>
-                                <img src="/Carrental/CarRental_Frontend/assets/img/cars/<?= htmlspecialchars($img['ImageURL']) ?>" alt="Car image">
+                                <img src="/Carrental/public/frontend/assets/img/cars/<?= htmlspecialchars($img['ImageURL']) ?>" alt="Car image">
                             </div>
 
                             <form action="/Carrental/admin/cars/<?= $carId ?>/images/update" method="POST" class="mt-2">
@@ -198,7 +198,7 @@ $carId = (int) $car['CarID'];
                     <div class="img-card">
                         <div class="img-wrap">
                             <span class="badge-main">Ảnh chính</span>
-                            <img src="/Carrental/CarRental_Frontend/assets/img/cars/<?= htmlspecialchars($car['MainImage']) ?>" alt="Main image">
+                            <img src="/Carrental/public/frontend/assets/img/cars/<?= htmlspecialchars($car['MainImage']) ?>" alt="Main image">
                         </div>
                         <div class="mt-2 text-muted small text-center">Ảnh cũ từ MainImage</div>
                     </div>
@@ -211,4 +211,4 @@ $carId = (int) $car['CarID'];
     </div>
 </div>
 
-<script src="/Carrental/CarRental_Admin/assets/js/cars-admin.js"></script>
+<script src="/Carrental/public/admin/assets/js/cars-admin.js"></script>

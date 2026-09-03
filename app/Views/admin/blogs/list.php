@@ -36,8 +36,8 @@ use App\Core\Auth;
                             <?php
                                 $imageSrc = blogThumbnailSrc(
                                     $row['Thumbnail'] ?? '',
-                                    '/Carrental/CarRental_Frontend/assets/img/',
-                                    '/Carrental/CarRental_Frontend/assets/img/cars/blog-1.jpg'
+                                    '/Carrental/public/frontend/assets/img/',
+                                    '/Carrental/public/frontend/assets/img/cars/blog-1.jpg'
                                 );
                                 $author = $row['FullName'] ?? 'VinaDrive';
                             ?>

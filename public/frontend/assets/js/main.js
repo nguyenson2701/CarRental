@@ -159,7 +159,7 @@ if (window.jQuery) {
             var imageWrap = document.createElement("div");
             imageWrap.className = "ai-car-image";
             var image = document.createElement("img");
-            image.src = car.image || "/Carrental/CarRental_Frontend/assets/img/cars/car-1.png";
+            image.src = car.image || "/Carrental/public/frontend/assets/img/cars/car-1.png";
             image.alt = car.name || "Xe cho thuê";
             image.loading = "lazy";
             imageWrap.appendChild(image);

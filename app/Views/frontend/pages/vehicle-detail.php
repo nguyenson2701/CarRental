@@ -7,11 +7,11 @@
 <div class="container py-5">
     <div class="row g-5">
         <div class="col-lg-7">
-            <img src="/Carrental/CarRental_Frontend/assets/img/cars/<?= htmlspecialchars($car['MainImage']) ?>" class="img-fluid rounded mb-4" style="width:100%; max-height:420px; object-fit:cover;" alt="">
+            <img src="/Carrental/public/frontend/assets/img/cars/<?= htmlspecialchars($car['MainImage']) ?>" class="img-fluid rounded mb-4" style="width:100%; max-height:420px; object-fit:cover;" alt="">
 
             <div class="d-flex flex-wrap gap-2">
                 <?php foreach ($images as $img): ?>
-                    <img src="/Carrental/CarRental_Frontend/assets/img/cars/<?= htmlspecialchars($img['ImageURL']) ?>" style="width:120px;height:85px;object-fit:cover;border-radius:10px;border:1px solid #ddd;" alt="">
+                    <img src="/Carrental/public/frontend/assets/img/cars/<?= htmlspecialchars($img['ImageURL']) ?>" style="width:120px;height:85px;object-fit:cover;border-radius:10px;border:1px solid #ddd;" alt="">
                 <?php endforeach; ?>
             </div>
         </div>

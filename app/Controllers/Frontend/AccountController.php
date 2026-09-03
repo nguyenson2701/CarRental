@@ -79,8 +79,8 @@ class AccountController extends Controller
             $this->redirect('/Carrental/profile?error=' . urlencode('Không tìm thấy tài khoản.'));
         }
 
-        $avatarDir = __DIR__ . '/../../../CarRental_Frontend/assets/img/avatars/';
-        $gplxDir = __DIR__ . '/../../../CarRental_Frontend/assets/img/GPLX/';
+        $avatarDir = __DIR__ . '/../../../public/frontend/assets/img/avatars/';
+        $gplxDir = __DIR__ . '/../../../public/frontend/assets/img/GPLX/';
 
         $avatarUploaded = safeUploadImage('Avatar', $avatarDir, 'avatar_' . $userId, ['jpg', 'jpeg', 'png', 'webp']);
         $avatarPath = ($avatarUploaded === null || $avatarUploaded === false) ? ($oldUser['Avatar'] ?? '') : ('assets/img/avatars/' . $avatarUploaded);

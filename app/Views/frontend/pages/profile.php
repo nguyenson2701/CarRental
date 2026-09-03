@@ -28,14 +28,14 @@ function frontendImageUrl($path, $type = 'avatar'): string
     }
 
     if (strpos($path, 'assets/') === 0) {
-        return '/Carrental/CarRental_Frontend/' . $path;
+        return '/Carrental/public/frontend/' . $path;
     }
 
     if ($type === 'license') {
-        return '/Carrental/CarRental_Frontend/assets/img/GPLX/' . basename($path);
+        return '/Carrental/public/frontend/assets/img/GPLX/' . basename($path);
     }
 
-    return '/Carrental/CarRental_Frontend/assets/img/avatars/' . basename($path);
+    return '/Carrental/public/frontend/assets/img/avatars/' . basename($path);
 }
 ?>
 <style>

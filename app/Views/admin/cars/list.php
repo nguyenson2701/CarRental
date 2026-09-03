@@ -61,7 +61,7 @@ use App\Core\Auth;
                                                     </span>
                                                 <?php endif; ?>
                                                 <img
-                                                    src="/Carrental/CarRental_Frontend/assets/img/cars/<?= htmlspecialchars($img['ImageURL']) ?>"
+                                                    src="/Carrental/public/frontend/assets/img/cars/<?= htmlspecialchars($img['ImageURL']) ?>"
                                                     alt="Car"
                                                     style="width:70px;height:52px;object-fit:cover;border-radius:6px;border:1px solid #dbe3ea;">
                                             </div>

@@ -52,7 +52,7 @@ use App\Core\Auth;
                                 <td><?= $row['UserID'] ?></td>
                                 <td>
                                     <?php if (!empty($row['Avatar'])): ?>
-                                        <img src="/Carrental/CarRental_Frontend/assets/img/avatars/<?= htmlspecialchars($row['Avatar']) ?>"
+                                        <img src="/Carrental/public/frontend/assets/img/avatars/<?= htmlspecialchars($row['Avatar']) ?>"
                                             alt="Avatar" style="width:60px; height:60px; object-fit:cover; border-radius:50%; border:1px solid #ddd;">
                                     <?php else: ?>
                                         <span>Chưa có</span>
@@ -63,8 +63,8 @@ use App\Core\Auth;
                                 <td><?= htmlspecialchars($row['Phone']) ?></td>
                                 <td>
                                     <?php if (!empty($row['LicenseFrontImage'])): ?>
-                                        <a href="/Carrental/CarRental_Frontend/assets/img/GPLX/<?= htmlspecialchars($row['LicenseFrontImage']) ?>" target="_blank">
-                                            <img src="/Carrental/CarRental_Frontend/assets/img/GPLX/<?= htmlspecialchars($row['LicenseFrontImage']) ?>"
+                                        <a href="/Carrental/public/frontend/assets/img/GPLX/<?= htmlspecialchars($row['LicenseFrontImage']) ?>" target="_blank">
+                                            <img src="/Carrental/public/frontend/assets/img/GPLX/<?= htmlspecialchars($row['LicenseFrontImage']) ?>"
                                                 alt="GPLX trước" style="width:90px; height:60px; object-fit:cover; border-radius:6px; border:1px solid #ddd;">
                                         </a>
                                     <?php else: ?>
@@ -73,8 +73,8 @@ use App\Core\Auth;
                                 </td>
                                 <td>
                                     <?php if (!empty($row['LicenseBackImage'])): ?>
-                                        <a href="/Carrental/CarRental_Frontend/assets/img/GPLX/<?= htmlspecialchars($row['LicenseBackImage']) ?>" target="_blank">
-                                            <img src="/Carrental/CarRental_Frontend/assets/img/GPLX/<?= htmlspecialchars($row['LicenseBackImage']) ?>"
+                                        <a href="/Carrental/public/frontend/assets/img/GPLX/<?= htmlspecialchars($row['LicenseBackImage']) ?>" target="_blank">
+                                            <img src="/Carrental/public/frontend/assets/img/GPLX/<?= htmlspecialchars($row['LicenseBackImage']) ?>"
                                                 alt="GPLX sau" style="width:90px; height:60px; object-fit:cover; border-radius:6px; border:1px solid #ddd;">
                                         </a>
                                     <?php else: ?>

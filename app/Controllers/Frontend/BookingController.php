@@ -81,7 +81,7 @@ class BookingController extends Controller
             die('Dữ liệu không hợp lệ.');
         }
 
-        $uploadDir = __DIR__ . '/../../../CarRental_Frontend/assets/img/returns/';
+        $uploadDir = __DIR__ . '/../../../public/frontend/assets/img/returns/';
         if (!is_dir($uploadDir) && !mkdir($uploadDir, 0777, true)) {
             die('Không thể tạo thư mục upload ảnh trả xe.');
         }

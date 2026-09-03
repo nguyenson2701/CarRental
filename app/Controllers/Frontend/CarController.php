@@ -73,8 +73,8 @@ class CarController extends Controller
             'activePage' => 'vehicle',
             'car' => $car,
             'images' => array_slice($images, 0, 6),
-            'pageStyles' => ['/Carrental/CarRental_Frontend/assets/css/booking.css?v=1'],
-            'pageScripts' => ['/Carrental/CarRental_Frontend/assets/js/booking.js?v=1'],
+            'pageStyles' => ['/Carrental/public/frontend/assets/css/booking.css?v=1'],
+            'pageScripts' => ['/Carrental/public/frontend/assets/js/booking.js?v=1'],
         ], 'frontend/layout/main');
     }
 }

@@ -314,7 +314,7 @@ class CarController extends Controller
 
     private function carsUploadDir(): string
     {
-        return __DIR__ . '/../../../CarRental_Frontend/assets/img/cars/';
+        return __DIR__ . '/../../../public/frontend/assets/img/cars/';
     }
 
     private function deleteFolderRecursive(string $folderPath): void

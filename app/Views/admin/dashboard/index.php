@@ -280,7 +280,7 @@ function userStatusBadgeClass(string $status): string
                                 <td><?= $row['CarID'] ?></td>
                                 <td>
                                     <?php if (!empty($row['MainImage'])): ?>
-                                        <img class="admin-car-thumb" src="/Carrental/CarRental_Frontend/assets/img/cars/<?= htmlspecialchars($row['MainImage']) ?>" alt="Car">
+                                        <img class="admin-car-thumb" src="/Carrental/public/frontend/assets/img/cars/<?= htmlspecialchars($row['MainImage']) ?>" alt="Car">
                                     <?php else: ?>
                                         <span class="text-muted">Chưa có ảnh</span>
                                     <?php endif; ?>
@@ -352,7 +352,7 @@ function userStatusBadgeClass(string $status): string
                         <td><?= $row['UserID'] ?></td>
                         <td>
                             <?php if (!empty($row['Avatar'])): ?>
-                                <img class="admin-avatar-thumb" src="/Carrental/CarRental_Frontend/assets/img/avatars/<?= htmlspecialchars($row['Avatar']) ?>" alt="Avatar">
+                                <img class="admin-avatar-thumb" src="/Carrental/public/frontend/assets/img/avatars/<?= htmlspecialchars($row['Avatar']) ?>" alt="Avatar">
                             <?php else: ?>
                                 Chưa có
                             <?php endif; ?>

@@ -84,10 +84,10 @@ if (!empty($_SESSION['user_id'])) {
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
-    <link href="/Carrental/CarRental_Frontend/lib/animate/animate.min.css" rel="stylesheet">
-    <link href="/Carrental/CarRental_Frontend/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-    <link href="/Carrental/CarRental_Frontend/assets/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/Carrental/CarRental_Frontend/assets/css/style.css?v=8" rel="stylesheet">
+    <link href="/Carrental/public/frontend/lib/animate/animate.min.css" rel="stylesheet">
+    <link href="/Carrental/public/frontend/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="/Carrental/public/frontend/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/Carrental/public/frontend/assets/css/style.css?v=8" rel="stylesheet">
 
     <?php foreach ($pageStyles as $style): ?>
         <link href="<?= htmlspecialchars($style) ?>" rel="stylesheet">
@@ -273,9 +273,9 @@ if (!empty($_SESSION['user_id'])) {
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="/Carrental/CarRental_Frontend/lib/wow/wow.min.js"></script>
-<script src="/Carrental/CarRental_Frontend/lib/owlcarousel/owl.carousel.min.js"></script>
-<script src="/Carrental/CarRental_Frontend/assets/js/main.js?v=8"></script>
+<script src="/Carrental/public/frontend/lib/wow/wow.min.js"></script>
+<script src="/Carrental/public/frontend/lib/owlcarousel/owl.carousel.min.js"></script>
+<script src="/Carrental/public/frontend/assets/js/main.js?v=8"></script>
 <?php foreach ($pageScripts as $script): ?>
     <script src="<?= htmlspecialchars($script) ?>"></script>
 <?php endforeach; ?>

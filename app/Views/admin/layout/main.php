@@ -23,13 +23,13 @@ function navActive(string $prefix, string $currentPath): string
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?= htmlspecialchars($pageTitle) ?> - VinaDrive Admin</title>
 
-    <link href="/Carrental/CarRental_Admin/vendor/nunito/nunito.css" rel="stylesheet">
-    <link href="/Carrental/CarRental_Admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
-    <link href="/Carrental/CarRental_Admin/css/sb-admin-2.min.css" rel="stylesheet">
-    <link href="/Carrental/CarRental_Admin/css/admin-theme.css" rel="stylesheet">
-    <link href="/Carrental/CarRental_Admin/css/cars-admin.css" rel="stylesheet">
-    <link href="/Carrental/CarRental_Admin/css/admin-dashboard.css" rel="stylesheet">
-    <link href="/Carrental/CarRental_Admin/css/booking-detail.css" rel="stylesheet">
+    <link href="/Carrental/public/admin/vendor/nunito/nunito.css" rel="stylesheet">
+    <link href="/Carrental/public/admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="/Carrental/public/admin/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="/Carrental/public/admin/css/admin-theme.css" rel="stylesheet">
+    <link href="/Carrental/public/admin/css/cars-admin.css" rel="stylesheet">
+    <link href="/Carrental/public/admin/css/admin-dashboard.css" rel="stylesheet">
+    <link href="/Carrental/public/admin/css/booking-detail.css" rel="stylesheet">
 </head>
 <body id="page-top">
 <div id="wrapper">
@@ -110,9 +110,9 @@ function navActive(string $prefix, string $currentPath): string
     </div>
 </div>
 
-<script src="/Carrental/CarRental_Admin/vendor/jquery/jquery.min.js"></script>
-<script src="/Carrental/CarRental_Admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="/Carrental/CarRental_Admin/vendor/jquery-easing/jquery.easing.min.js"></script>
-<script src="/Carrental/CarRental_Admin/js/sb-admin-2.min.js"></script>
+<script src="/Carrental/public/admin/vendor/jquery/jquery.min.js"></script>
+<script src="/Carrental/public/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/Carrental/public/admin/vendor/jquery-easing/jquery.easing.min.js"></script>
+<script src="/Carrental/public/admin/js/sb-admin-2.min.js"></script>
 </body>
 </html>

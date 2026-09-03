@@ -16,7 +16,7 @@ use App\Core\Auth;
 
             <div class="row mb-4">
                 <div class="col-md-4">
-                    <img src="/Carrental/CarRental_Frontend/assets/img/cars/<?= htmlspecialchars($booking['MainImage']) ?>" class="img-fluid rounded-4" style="height:220px;width:100%;object-fit:cover;">
+                    <img src="/Carrental/public/frontend/assets/img/cars/<?= htmlspecialchars($booking['MainImage']) ?>" class="img-fluid rounded-4" style="height:220px;width:100%;object-fit:cover;">
                 </div>
                 <div class="col-md-8">
                     <h4><?= htmlspecialchars($booking['CarName']) ?></h4>

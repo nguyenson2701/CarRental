@@ -19,7 +19,7 @@
             <?php if (count($posts) > 0): ?>
                 <?php foreach ($posts as $post): ?>
                     <?php
-                        $imageSrc = blogThumbnailSrc($post['Thumbnail'] ?? '', '/Carrental/CarRental_Frontend/assets/img/', '/Carrental/CarRental_Frontend/assets/img/cars/blog-1.jpg');
+                        $imageSrc = blogThumbnailSrc($post['Thumbnail'] ?? '', '/Carrental/public/frontend/assets/img/', '/Carrental/public/frontend/assets/img/cars/blog-1.jpg');
                         $excerpt = makeBlogExcerpt($post['Content'] ?? '');
                         $author = $post['FullName'] ?? 'VinaDrive';
                     ?>

@@ -13,8 +13,8 @@ use App\Core\Auth;
     <title>Đăng nhập</title>
 
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-    <link href="/Carrental/CarRental_Admin/css/sb-admin-2.min.css" rel="stylesheet">
-    <link href="/Carrental/CarRental_Admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="/Carrental/public/admin/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="/Carrental/public/admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
 </head>
 <body class="bg-gradient-primary">
 
@@ -54,7 +54,7 @@ use App\Core\Auth;
 
                                 <hr>
                                 <div class="text-center">
-                                    <a class="small" href="/Carrental/CarRental_Frontend/forgot-password.php">Forgot Password?</a>
+                                    <a class="small" href="/Carrental/public/frontend/forgot-password.php">Forgot Password?</a>
                                 </div>
                                 <div class="text-center mt-2">
                                     <a class="small" href="/Carrental/register">Chưa có tài khoản? Đăng ký</a>
@@ -68,9 +68,9 @@ use App\Core\Auth;
     </div>
 </div>
 
-<script src="/Carrental/CarRental_Admin/vendor/jquery/jquery.min.js"></script>
-<script src="/Carrental/CarRental_Admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="/Carrental/CarRental_Admin/vendor/jquery-easing/jquery.easing.min.js"></script>
-<script src="/Carrental/CarRental_Admin/js/sb-admin-2.min.js"></script>
+<script src="/Carrental/public/admin/vendor/jquery/jquery.min.js"></script>
+<script src="/Carrental/public/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/Carrental/public/admin/vendor/jquery-easing/jquery.easing.min.js"></script>
+<script src="/Carrental/public/admin/js/sb-admin-2.min.js"></script>
 </body>
 </html>

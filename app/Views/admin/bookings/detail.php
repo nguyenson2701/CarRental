@@ -133,7 +133,7 @@ $remainingAmount = max(0, $grandTotal - $paidAmount);
             <div class="detail-sticky-col">
                 <div class="car-image-box mb-4">
                     <?php if (!empty($booking['MainImage'])): ?>
-                        <img src="/Carrental/CarRental_Frontend/assets/img/cars/<?= htmlspecialchars($booking['MainImage']) ?>" alt="Car">
+                        <img src="/Carrental/public/frontend/assets/img/cars/<?= htmlspecialchars($booking['MainImage']) ?>" alt="Car">
                     <?php else: ?>
                         <div class="car-image-placeholder"><i class="fas fa-car"></i><span>Chưa có ảnh xe</span></div>
                     <?php endif; ?>

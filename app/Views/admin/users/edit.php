@@ -24,7 +24,7 @@ $userId = (int) $user['UserID'];
                 <div class="col-md-4 form-group text-center">
                     <label class="font-weight-bold d-block">Avatar hiện tại</label>
                     <?php if (!empty($user['Avatar'])): ?>
-                        <img src="/Carrental/CarRental_Frontend/assets/img/avatars/<?= htmlspecialchars($user['Avatar']) ?>"
+                        <img src="/Carrental/public/frontend/assets/img/avatars/<?= htmlspecialchars($user['Avatar']) ?>"
                             alt="Avatar" style="width:110px; height:110px; object-fit:cover; border-radius:50%; border:1px solid #ddd; margin-bottom:10px;">
                     <?php else: ?>
                         <div style="width:110px; height:110px; margin:0 auto 10px; border:1px dashed #ccc; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#888;">
@@ -38,7 +38,7 @@ $userId = (int) $user['UserID'];
                 <div class="col-md-4 form-group text-center">
                     <label class="font-weight-bold d-block">GPLX mặt trước hiện tại</label>
                     <?php if (!empty($user['LicenseFrontImage'])): ?>
-                        <img src="/Carrental/CarRental_Frontend/assets/img/GPLX/<?= htmlspecialchars($user['LicenseFrontImage']) ?>"
+                        <img src="/Carrental/public/frontend/assets/img/GPLX/<?= htmlspecialchars($user['LicenseFrontImage']) ?>"
                             alt="GPLX mặt trước" style="width:160px; height:100px; object-fit:cover; border-radius:8px; border:1px solid #ddd; margin-bottom:10px;">
                     <?php else: ?>
                         <div style="width:160px; height:100px; margin:0 auto 10px; border:1px dashed #ccc; border-radius:8px; display:flex; align-items:center; justify-content:center; color:#888;">
@@ -52,7 +52,7 @@ $userId = (int) $user['UserID'];
                 <div class="col-md-4 form-group text-center">
                     <label class="font-weight-bold d-block">GPLX mặt sau hiện tại</label>
                     <?php if (!empty($user['LicenseBackImage'])): ?>
-                        <img src="/Carrental/CarRental_Frontend/assets/img/GPLX/<?= htmlspecialchars($user['LicenseBackImage']) ?>"
+                        <img src="/Carrental/public/frontend/assets/img/GPLX/<?= htmlspecialchars($user['LicenseBackImage']) ?>"
                             alt="GPLX mặt sau" style="width:160px; height:100px; object-fit:cover; border-radius:8px; border:1px solid #ddd; margin-bottom:10px;">
                     <?php else: ?>
                         <div style="width:160px; height:100px; margin:0 auto 10px; border:1px dashed #ccc; border-radius:8px; display:flex; align-items:center; justify-content:center; color:#888;">

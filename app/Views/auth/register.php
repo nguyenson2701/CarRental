@@ -12,9 +12,9 @@ use App\Core\Auth;
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Đăng ký tài khoản</title>
 
-    <link href="/Carrental/CarRental_Admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="/Carrental/public/admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet">
-    <link href="/Carrental/CarRental_Admin/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="/Carrental/public/admin/css/sb-admin-2.min.css" rel="stylesheet">
 </head>
 <body class="bg-gradient-primary">
 
@@ -78,9 +78,9 @@ use App\Core\Auth;
     </div>
 </div>
 
-<script src="/Carrental/CarRental_Admin/vendor/jquery/jquery.min.js"></script>
-<script src="/Carrental/CarRental_Admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="/Carrental/CarRental_Admin/vendor/jquery-easing/jquery.easing.min.js"></script>
-<script src="/Carrental/CarRental_Admin/js/sb-admin-2.min.js"></script>
+<script src="/Carrental/public/admin/vendor/jquery/jquery.min.js"></script>
+<script src="/Carrental/public/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/Carrental/public/admin/vendor/jquery-easing/jquery.easing.min.js"></script>
+<script src="/Carrental/public/admin/js/sb-admin-2.min.js"></script>
 </body>
 </html>

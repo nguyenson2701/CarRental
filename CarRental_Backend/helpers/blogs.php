@@ -52,7 +52,7 @@ function uploadBlogThumbnail(string $fieldName = 'Thumbnail'): string
         return '';
     }
 
-    $uploadDir = __DIR__ . '/../../CarRental_Frontend/assets/img/blogs';
+    $uploadDir = __DIR__ . '/../../public/frontend/assets/img/blogs';
     $fileName = safeUploadImage($fieldName, $uploadDir, 'blog', ['jpg', 'jpeg', 'png', 'gif', 'webp']);
 
     if ($fileName === null) {
@@ -84,11 +84,11 @@ function blogThumbnailSrc(string $thumbnail, string $publicPrefix = 'assets/img/
         $normalized = 'blogs/' . $normalized;
     }
 
-    $absolutePath = __DIR__ . '/../../CarRental_Frontend/assets/img/' . $normalized;
+    $absolutePath = __DIR__ . '/../../public/frontend/assets/img/' . $normalized;
     if (!is_file($absolutePath)) {
         if (preg_match('/^blogs\/blog(\d+)\.(jpg|jpeg|png|webp|gif)$/i', $normalized, $matches)) {
             $legacyFallback = 'cars/blog-' . $matches[1] . '.' . strtolower($matches[2]);
-            $legacyPath = __DIR__ . '/../../CarRental_Frontend/assets/img/' . $legacyFallback;
+            $legacyPath = __DIR__ . '/../../public/frontend/assets/img/' . $legacyFallback;
             if (is_file($legacyPath)) {
                 return rtrim($publicPrefix, '/') . '/' . $legacyFallback;
             }

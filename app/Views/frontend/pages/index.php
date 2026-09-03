@@ -8,7 +8,7 @@
     <div id="carouselId" class="carousel slide" data-bs-ride="carousel" data-bs-interval="false">
         <div class="carousel-inner" role="listbox">
             <div class="carousel-item active">
-                <img src="/Carrental/CarRental_Frontend/assets/img/fact-bg.jpg" class="img-fluid w-100" alt="slide"/>
+                <img src="/Carrental/public/frontend/assets/img/fact-bg.jpg" class="img-fluid w-100" alt="slide"/>
                 <div class="carousel-caption">
                     <div class="container py-4">
                         <div class="row g-5">
@@ -56,14 +56,14 @@
                     <div class="row g-4">
                         <div class="col-lg-6">
                             <div class="about-item-inner border p-4">
-                                <div class="about-icon mb-4"><img src="/Carrental/CarRental_Frontend/assets/img/about-icon-1.png" class="img-fluid w-50 h-50" alt="Icon"></div>
+                                <div class="about-icon mb-4"><img src="/Carrental/public/frontend/assets/img/about-icon-1.png" class="img-fluid w-50 h-50" alt="Icon"></div>
                                 <h5 class="mb-3">Tầm nhìn</h5>
                                 <p class="mb-0">Trở thành nền tảng thuê xe đáng tin cậy, giúp việc đặt xe trở nên đơn giản và an toàn hơn.</p>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="about-item-inner border p-4">
-                                <div class="about-icon mb-4"><img src="/Carrental/CarRental_Frontend/assets/img/about-icon-2.png" class="img-fluid h-50 w-50" alt="Icon"></div>
+                                <div class="about-icon mb-4"><img src="/Carrental/public/frontend/assets/img/about-icon-2.png" class="img-fluid h-50 w-50" alt="Icon"></div>
                                 <h5 class="mb-3">Sứ mệnh</h5>
                                 <p class="mb-0">Mang đến nhiều lựa chọn xe chất lượng với mức giá rõ ràng và quy trình đặt xe thuận tiện.</p>
                             </div>
@@ -90,7 +90,7 @@
                         </div>
                         <div class="col-lg-7">
                             <div class="d-flex align-items-center">
-                                <img src="/Carrental/CarRental_Frontend/assets/img/avatars/attachment-img.jpg" class="img-fluid rounded-circle border border-4 border-secondary" style="width: 100px; height: 100px;" alt="Image">
+                                <img src="/Carrental/public/frontend/assets/img/avatars/attachment-img.jpg" class="img-fluid rounded-circle border border-4 border-secondary" style="width: 100px; height: 100px;" alt="Image">
                                 <div class="ms-4">
                                     <h4>Đội ngũ VinaDrive</h4>
                                     <p class="mb-0">Luôn đồng hành cùng khách hàng</p>
@@ -102,8 +102,8 @@
             </div>
             <div class="col-xl-6 wow fadeInRight" data-wow-delay="0.2s">
                 <div class="about-img">
-                    <div class="img-1"><img src="/Carrental/CarRental_Frontend/assets/img/about-img.jpg" class="img-fluid rounded h-100 w-100" alt=""></div>
-                    <div class="img-2"><img src="/Carrental/CarRental_Frontend/assets/img/cars/about-img-1.jpg" class="img-fluid rounded w-100" alt=""></div>
+                    <div class="img-1"><img src="/Carrental/public/frontend/assets/img/about-img.jpg" class="img-fluid rounded h-100 w-100" alt=""></div>
+                    <div class="img-2"><img src="/Carrental/public/frontend/assets/img/cars/about-img-1.jpg" class="img-fluid rounded w-100" alt=""></div>
                 </div>
             </div>
         </div>
@@ -123,7 +123,7 @@
                     <div class="categories-item p-4">
                         <div class="categories-item-inner">
                             <div class="categories-img rounded-top">
-                                <img src="/Carrental/CarRental_Frontend/assets/img/cars/<?= htmlspecialchars($car['MainImage']) ?>" class="img-fluid w-100 rounded-top home-car-img" alt="<?= htmlspecialchars($car['CarName']) ?>">
+                                <img src="/Carrental/public/frontend/assets/img/cars/<?= htmlspecialchars($car['MainImage']) ?>" class="img-fluid w-100 rounded-top home-car-img" alt="<?= htmlspecialchars($car['CarName']) ?>">
                             </div>
                             <div class="categories-content rounded-bottom p-4">
                                 <h4><?= htmlspecialchars($car['CarName']) ?></h4>
@@ -167,7 +167,7 @@
             <?php if (count($latestPosts) > 0): ?>
                 <?php foreach ($latestPosts as $post): ?>
                     <?php
-                        $imageSrc = blogThumbnailSrc($post['Thumbnail'] ?? '', '/Carrental/CarRental_Frontend/assets/img/', '/Carrental/CarRental_Frontend/assets/img/cars/blog-1.jpg');
+                        $imageSrc = blogThumbnailSrc($post['Thumbnail'] ?? '', '/Carrental/public/frontend/assets/img/', '/Carrental/public/frontend/assets/img/cars/blog-1.jpg');
                         $excerpt = makeBlogExcerpt($post['Content'] ?? '', 120);
                         $author = $post['FullName'] ?? 'VinaDrive';
                     ?>

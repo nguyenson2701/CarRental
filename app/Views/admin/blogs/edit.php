@@ -31,8 +31,8 @@ $blogId = (int) $blog['BlogID'];
                             <?php
                                 $thumbnailSrc = blogThumbnailSrc(
                                     $blog['Thumbnail'],
-                                    '/Carrental/CarRental_Frontend/assets/img/',
-                                    '/Carrental/CarRental_Frontend/assets/img/cars/blog-1.jpg'
+                                    '/Carrental/public/frontend/assets/img/',
+                                    '/Carrental/public/frontend/assets/img/cars/blog-1.jpg'
                                 );
                             ?>
                             <img src="<?= htmlspecialchars($thumbnailSrc) ?>" alt="" style="width:160px;height:100px;object-fit:cover;border-radius:4px;">

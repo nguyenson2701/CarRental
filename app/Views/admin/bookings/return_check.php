@@ -7,7 +7,7 @@ function imgUrl(?string $path): string
     if (!$path) {
         return '';
     }
-    return '/Carrental/CarRental_Frontend/' . ltrim($path, '/');
+    return '/Carrental/public/frontend/' . ltrim($path, '/');
 }
 ?>
 <div class="d-sm-flex align-items-center justify-content-between mb-4">

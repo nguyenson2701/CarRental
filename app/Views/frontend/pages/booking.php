@@ -15,12 +15,12 @@ use App\Core\Auth;
         <div class="row g-0">
             <div class="col-lg-7">
                 <div class="booking-left">
-                    <img id="mainPreview" src="/Carrental/CarRental_Frontend/assets/img/cars/<?= htmlspecialchars($car['MainImage']) ?>" alt="<?= htmlspecialchars($car['CarName']) ?>" class="car-main-img">
+                    <img id="mainPreview" src="/Carrental/public/frontend/assets/img/cars/<?= htmlspecialchars($car['MainImage']) ?>" alt="<?= htmlspecialchars($car['CarName']) ?>" class="car-main-img">
 
                     <div class="thumb-list">
-                        <img src="/Carrental/CarRental_Frontend/assets/img/cars/<?= htmlspecialchars($car['MainImage']) ?>" alt="main" onclick="changeMainImage(this.src)">
+                        <img src="/Carrental/public/frontend/assets/img/cars/<?= htmlspecialchars($car['MainImage']) ?>" alt="main" onclick="changeMainImage(this.src)">
                         <?php foreach ($images as $img): ?>
-                            <img src="/Carrental/CarRental_Frontend/assets/img/cars/<?= htmlspecialchars($img['ImageURL']) ?>" alt="thumb" onclick="changeMainImage(this.src)">
+                            <img src="/Carrental/public/frontend/assets/img/cars/<?= htmlspecialchars($img['ImageURL']) ?>" alt="thumb" onclick="changeMainImage(this.src)">
                         <?php endforeach; ?>
                     </div>
 

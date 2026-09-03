@@ -13,13 +13,26 @@
 
 ## 2. Trước khi sửa
 
-1. Xác định đúng phạm vi: đây là 3 module độc lập nhưng dùng chung DB —
-   [CarRental_Frontend/](CarRental_Frontend/) (khách hàng), [CarRental_Admin/](CarRental_Admin/) (quản trị),
-   [CarRental_Backend/](CarRental_Backend/) (API xử lý, dùng chung cho cả hai module trên).
+1. Xác định đúng phạm vi — dự án đã chuyển hẳn sang kiến trúc MVC (không còn 3 module trang riêng biệt cũ):
+   - [index.php](index.php) — front controller duy nhất, mọi URL `/Carrental/...` đi qua đây (xem
+     [.htaccess](.htaccess) ở gốc dự án).
+   - [app/Core/](app/Core/) — Router, Controller/Model cơ sở, `Database` (kết nối mysqli), `Auth` (session/phân
+     quyền/CSRF — thay cho `CarRental_Backend/config/auth.php` cũ, file đó **không còn được dùng**).
+   - [app/Controllers/](app/Controllers/), [app/Models/](app/Models/), [app/Views/](app/Views/) — chia theo
+     `Admin/` (quản trị) và `Frontend/` (khách hàng), dùng chung 1 database.
+   - [public/admin/](public/admin/), [public/frontend/](public/frontend/) — **chỉ chứa asset tĩnh** (CSS/JS/ảnh
+     giao diện) và **ảnh khách hàng đã upload thật** (avatar, GPLX, ảnh xe, ảnh trả xe) — không còn file `.php`
+     logic nào ở đây, chỉ là nơi lưu trữ được Router/View trỏ tới. Xoá nhầm ảnh trong này là xoá dữ liệu thật.
+   - [CarRental_Backend/config/](CarRental_Backend/config/), [CarRental_Backend/helpers/](CarRental_Backend/helpers/) —
+     config kết nối DB + helper dùng chung (upload, bookings, blogs), được `app/` gọi tới. **Bị chặn truy cập web
+     trực tiếp bằng `.htaccess`** (`Require all denied`) — chỉ gọi được từ PHP nội bộ (`require`), không phải "trang".
+   - [CarRental_Backend/api/](CarRental_Backend/api/) — chỉ còn vài endpoint AJAX/JSON thật sự còn dùng
+     (`bookings/{calendar,check_availability}.php` cho form đặt xe, `chatbot/chat.php`) — vẫn được gọi trực tiếp
+     qua URL nên không bị `.htaccess` chặn.
 2. Đọc [schema.sql](schema.sql) trước khi đụng tới bất kỳ bảng nào — đây là nguồn sự thật duy nhất về cấu trúc
    database (`carrentaldb`), được đối chiếu trực tiếp với DB thật, không phải suy đoán từ code.
-3. Đọc [CarRental_Backend/config/auth.php](CarRental_Backend/config/auth.php) trước khi đụng tới đăng nhập,
-   phân quyền (RoleID: 1=Admin, 2=Staff, 3=Customer) hoặc CSRF (`csrf_field()`, `requireCsrf()`).
+3. Đọc [app/Core/Auth.php](app/Core/Auth.php) trước khi đụng tới đăng nhập, phân quyền (RoleID: 1=Admin, 2=Staff,
+   3=Customer) hoặc CSRF (`Auth::csrfField()`, `Auth::requireCsrf()`) — đây là nơi logic auth thật sự nằm.
 4. Đọc [CarRental_Backend/helpers/upload.php](CarRental_Backend/helpers/upload.php) trước khi thêm bất kỳ tính
    năng upload file nào — mọi upload ảnh phải đi qua `safeUploadImage()` / `isRealImageUpload()`, không tự viết
    `move_uploaded_file()` trần.

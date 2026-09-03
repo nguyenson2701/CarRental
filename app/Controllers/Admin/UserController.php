@@ -46,8 +46,8 @@ class UserController extends Controller
             die('Vui lòng nhập mật khẩu.');
         }
 
-        $avatarDir = __DIR__ . '/../../../CarRental_Frontend/assets/img/avatars/';
-        $gplxDir = __DIR__ . '/../../../CarRental_Frontend/assets/img/GPLX/';
+        $avatarDir = __DIR__ . '/../../../public/frontend/assets/img/avatars/';
+        $gplxDir = __DIR__ . '/../../../public/frontend/assets/img/GPLX/';
 
         $avatar = requireValidImageOrDie('Avatar', $avatarDir, 'avatar', 'Ảnh đại diện', '');
         $licenseFront = requireValidImageOrDie('LicenseFrontImage', $gplxDir, 'license_front', 'Ảnh GPLX mặt trước', '');
@@ -92,8 +92,8 @@ class UserController extends Controller
             die('Không tìm thấy người dùng.');
         }
 
-        $avatarDir = __DIR__ . '/../../../CarRental_Frontend/assets/img/avatars/';
-        $gplxDir = __DIR__ . '/../../../CarRental_Frontend/assets/img/GPLX/';
+        $avatarDir = __DIR__ . '/../../../public/frontend/assets/img/avatars/';
+        $gplxDir = __DIR__ . '/../../../public/frontend/assets/img/GPLX/';
 
         $avatar = requireValidImageOrDie('Avatar', $avatarDir, 'avatar', 'Ảnh đại diện', $user['Avatar']);
         $licenseFront = requireValidImageOrDie('LicenseFrontImage', $gplxDir, 'license_front', 'Ảnh GPLX mặt trước', $user['LicenseFrontImage']);

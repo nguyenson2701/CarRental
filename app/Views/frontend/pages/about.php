@@ -61,8 +61,8 @@
 
             <div class="col-xl-6">
                 <div class="about-img">
-                    <div class="img-1"><img src="/Carrental/CarRental_Frontend/assets/img/about-img.jpg" class="img-fluid rounded h-100 w-100" alt="Khach hang thue xe"></div>
-                    <div class="img-2"><img src="/Carrental/CarRental_Frontend/assets/img/cars/about-img-1.jpg" class="img-fluid rounded w-100" alt="Xe cho thue"></div>
+                    <div class="img-1"><img src="/Carrental/public/frontend/assets/img/about-img.jpg" class="img-fluid rounded h-100 w-100" alt="Khach hang thue xe"></div>
+                    <div class="img-2"><img src="/Carrental/public/frontend/assets/img/cars/about-img-1.jpg" class="img-fluid rounded w-100" alt="Xe cho thue"></div>
                 </div>
             </div>
         </div>

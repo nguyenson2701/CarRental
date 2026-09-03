@@ -132,4 +132,4 @@ use App\Core\Auth;
     </div>
 </div>
 
-<script src="/Carrental/CarRental_Admin/assets/js/cars-admin.js"></script>
+<script src="/Carrental/public/admin/assets/js/cars-admin.js"></script>

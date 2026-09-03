@@ -25,7 +25,7 @@
             <?php foreach ($cars as $car): ?>
             <div class="col-md-6 col-lg-4">
                 <div class="card border-0 shadow h-100">
-                    <img src="/Carrental/CarRental_Frontend/assets/img/cars/<?= htmlspecialchars($car['MainImage']) ?>" class="card-img-top" style="height:240px; object-fit:cover;" alt="">
+                    <img src="/Carrental/public/frontend/assets/img/cars/<?= htmlspecialchars($car['MainImage']) ?>" class="card-img-top" style="height:240px; object-fit:cover;" alt="">
                     <div class="card-body">
                         <h5><?= htmlspecialchars($car['CarName']) ?></h5>
                         <p class="mb-2">Giá/ngày: <strong><?= number_format($car['PricePerDay'], 0, ',', '.') ?> VNĐ</strong></p>

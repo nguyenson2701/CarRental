@@ -3,7 +3,7 @@
  * @var array $post
  * @var array $relatedPosts
  */
-$imageSrc = blogThumbnailSrc($post['Thumbnail'] ?? '', '/Carrental/CarRental_Frontend/assets/img/', '/Carrental/CarRental_Frontend/assets/img/cars/blog-1.jpg');
+$imageSrc = blogThumbnailSrc($post['Thumbnail'] ?? '', '/Carrental/public/frontend/assets/img/', '/Carrental/public/frontend/assets/img/cars/blog-1.jpg');
 $author = $post['FullName'] ?? 'VinaDrive';
 ?>
 <div class="container-fluid bg-breadcrumb mb-5">
@@ -35,7 +35,7 @@ $author = $post['FullName'] ?? 'VinaDrive';
                     <h5 class="mb-3">Bài viết khác</h5>
                     <?php if (count($relatedPosts) > 0): ?>
                         <?php foreach ($relatedPosts as $related): ?>
-                            <?php $relatedImageSrc = blogThumbnailSrc($related['Thumbnail'] ?? '', '/Carrental/CarRental_Frontend/assets/img/', '/Carrental/CarRental_Frontend/assets/img/cars/blog-2.jpg'); ?>
+                            <?php $relatedImageSrc = blogThumbnailSrc($related['Thumbnail'] ?? '', '/Carrental/public/frontend/assets/img/', '/Carrental/public/frontend/assets/img/cars/blog-2.jpg'); ?>
                             <a href="/Carrental/blog/<?= urlencode($related['Slug']) ?>" class="d-flex text-decoration-none mb-3">
                                 <img src="<?= htmlspecialchars($relatedImageSrc) ?>" alt="" style="width:88px;height:64px;object-fit:cover;border-radius:6px;">
                                 <span class="ms-3">
