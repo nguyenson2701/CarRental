@@ -97,7 +97,7 @@ if (window.jQuery) {
     var input = form ? form.querySelector("input") : null;
     var suggestions = widget.querySelectorAll("[data-ai-question]");
 
-    var endpoint = "../CarRental_Backend/api/chatbot/chat.php";
+    var endpoint = "/Carrental/CarRental_Backend/api/chatbot/chat.php";
 
     function setOpen(isOpen) {
         panel.hidden = !isOpen;
@@ -154,12 +154,12 @@ if (window.jQuery) {
         cars.forEach(function (car) {
             var card = document.createElement("a");
             card.className = "ai-car-card";
-            card.href = car.url || "vehicle.php";
+            card.href = car.url || "/Carrental/vehicle";
 
             var imageWrap = document.createElement("div");
             imageWrap.className = "ai-car-image";
             var image = document.createElement("img");
-            image.src = car.image || "assets/img/cars/car-1.png";
+            image.src = car.image || "/Carrental/CarRental_Frontend/assets/img/cars/car-1.png";
             image.alt = car.name || "Xe cho thuê";
             image.loading = "lazy";
             imageWrap.appendChild(image);

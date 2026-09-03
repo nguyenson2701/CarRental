@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         try {
-            const url = `../CarRental_Backend/api/bookings/check_availability.php?car_id=${carId}&start_date=${encodeURIComponent(start)}&end_date=${encodeURIComponent(end)}`;
+            const url = `/Carrental/CarRental_Backend/api/bookings/check_availability.php?car_id=${carId}&start_date=${encodeURIComponent(start)}&end_date=${encodeURIComponent(end)}`;
             const res = await fetch(url);
             const data = await res.json();
 
@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!calendarList) return;
 
         try {
-            const res = await fetch(`../CarRental_Backend/api/bookings/calendar.php?car_id=${carId}`);
+            const res = await fetch(`/Carrental/CarRental_Backend/api/bookings/calendar.php?car_id=${carId}`);
             const data = await res.json();
 
             calendarList.innerHTML = '';
@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
-        const res = await fetch(`../CarRental_Backend/api/bookings/check_availability.php?car_id=${carId}&start_date=${encodeURIComponent(start)}&end_date=${encodeURIComponent(end)}`);
+        const res = await fetch(`/Carrental/CarRental_Backend/api/bookings/check_availability.php?car_id=${carId}&start_date=${encodeURIComponent(start)}&end_date=${encodeURIComponent(end)}`);
         const data = await res.json();
 
         if (!data.available) {

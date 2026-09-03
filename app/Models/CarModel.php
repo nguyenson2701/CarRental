@@ -30,6 +30,32 @@ class CarModel extends Model
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
+    /**
+     * Tim xe theo ten (dung cho trang danh sach xe Frontend - chi loc theo
+     * CarName, khac voi search() dung cho admin loc them ca bien
+     * so/mau/trang thai).
+     */
+    public function searchByName(string $keyword): array
+    {
+        if ($keyword === '') {
+            return $this->all('CarID DESC');
+        }
+
+        $stmt = $this->db->prepare("SELECT CarID, CarName, MainImage, PricePerDay, Transmission, FuelType, Seats, Status FROM `{$this->table}` WHERE CarName LIKE ? ORDER BY CarID DESC");
+        $search = "%$keyword%";
+        $stmt->bind_param('s', $search);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function imagesForCar(int $carId): array
+    {
+        $stmt = $this->db->prepare('SELECT ImageURL, IsMain FROM carimages WHERE CarID = ? ORDER BY IsMain DESC, ImageID ASC');
+        $stmt->bind_param('i', $carId);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+
     public function setFolderName(int $carId, string $folderName): void
     {
         $stmt = $this->db->prepare("UPDATE `{$this->table}` SET FolderName = ? WHERE CarID = ?");

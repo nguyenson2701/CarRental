@@ -4,6 +4,8 @@ namespace App\Models;
 
 use App\Core\Model;
 
+require_once __DIR__ . '/../../CarRental_Backend/helpers/bookings.php';
+
 /**
  * Quan ly don dat xe. Nhieu truy van/giao dich phuc tap (JOIN nhieu bang,
  * transaction) nen dung truc tiep $this->db thay vi CRUD chung cua Model.
@@ -107,6 +109,98 @@ class BookingModel extends Model
         return $row ?: null;
     }
 
+    /**
+     * Danh sach don cua 1 khach hang, giu dung truy van cua
+     * my-bookings.php cu.
+     */
+    public function forCustomer(int $userId): array
+    {
+        $stmt = $this->db->prepare("
+            SELECT b.*, b.TotalPenalty, b.PenaltyReason, c.CarName
+            FROM bookings b
+            INNER JOIN cars c ON b.CarID = c.CarID
+            WHERE b.UserID = ?
+            ORDER BY b.BookingID DESC
+        ");
+        $stmt->bind_param('i', $userId);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+
+    /**
+     * 1 don cua dung khach hang do, dang o trang thai Confirmed (du dieu
+     * kien gui yeu cau tra xe). Giu dung dieu kien cua return-car.php cu.
+     */
+    public function findReturnableForCustomer(int $bookingId, int $userId): ?array
+    {
+        $stmt = $this->db->prepare("
+            SELECT b.*, c.CarName, c.LicensePlate, c.MainImage
+            FROM bookings b
+            INNER JOIN cars c ON b.CarID = c.CarID
+            WHERE b.BookingID = ? AND b.UserID = ? AND b.Status = 'Confirmed'
+            LIMIT 1
+        ");
+        $stmt->bind_param('ii', $bookingId, $userId);
+        $stmt->execute();
+        $row = $stmt->get_result()->fetch_assoc();
+        return $row ?: null;
+    }
+
+    /**
+     * Khach hang gui yeu cau tra xe: tinh phi qua gio, luu anh dau/sau xe +
+     * ghi chu, chuyen ReturnStatus sang Pending cho admin duyet. Giu dung
+     * logic cua api/bookings/return_store.php cu (ca cong thuc tinh phi
+     * qua gio).
+     *
+     * @throws \RuntimeException neu du lieu khong hop le
+     */
+    public function submitReturn(int $bookingId, int $userId, string $actualReturnDate, string $frontImage, string $backImage, string $returnNote): void
+    {
+        $stmt = $this->db->prepare("
+            SELECT BookingID, UserID, CarID, EndDate, PricePerDay, ReturnStatus
+            FROM bookings
+            WHERE BookingID = ? AND UserID = ? AND Status IN ('Confirmed', 'Paid')
+            LIMIT 1
+        ");
+        $stmt->bind_param('ii', $bookingId, $userId);
+        $stmt->execute();
+        $booking = $stmt->get_result()->fetch_assoc();
+
+        if (!$booking) {
+            throw new \RuntimeException('Không tìm thấy đơn hợp lệ.');
+        }
+
+        if (in_array($booking['ReturnStatus'], ['Pending', 'Approved'], true)) {
+            throw new \RuntimeException('Đơn này đã gửi yêu cầu trả xe.');
+        }
+
+        $endTime = strtotime($booking['EndDate'] . ' 23:59:59');
+        $actualTime = strtotime($actualReturnDate);
+        $overtimeFee = 0;
+
+        if ($actualTime > $endTime) {
+            $diffMinutes = (int) ceil(($actualTime - $endTime) / 60);
+            if ($diffMinutes > 30) {
+                $overtimeHours = (int) ceil($diffMinutes / 60);
+                $overtimeFee = $overtimeHours <= 6
+                    ? $overtimeHours * 50000
+                    : ceil($overtimeHours / 24) * (float) $booking['PricePerDay'];
+            }
+        }
+
+        $stmtUpdate = $this->db->prepare("
+            UPDATE bookings
+            SET ActualReturnDate = ?, OvertimeFee = ?, ReturnFrontImage = ?, ReturnBackImage = ?, ReturnNote = ?,
+                ReturnStatus = 'Pending', UpdatedAt = NOW()
+            WHERE BookingID = ?
+        ");
+        $stmtUpdate->bind_param('sdsssi', $actualReturnDate, $overtimeFee, $frontImage, $backImage, $returnNote, $bookingId);
+
+        if (!$stmtUpdate->execute()) {
+            throw new \RuntimeException('Không thể gửi yêu cầu trả xe.');
+        }
+    }
+
     public function paymentsForBooking(int $bookingId): array
     {
         $stmt = $this->db->prepare("
@@ -117,6 +211,95 @@ class BookingModel extends Model
         $stmt->bind_param('i', $bookingId);
         $stmt->execute();
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+
+    /**
+     * Khach hang tao don dat xe moi. Giu dung logic cua
+     * api/bookings/store.php cu: khoa xe (FOR UPDATE), kiem tra bao tri +
+     * trung lich, tinh tien, tao don + khoan thanh toan tien coc (Pending).
+     *
+     * @return int BookingID vua tao
+     * @throws \RuntimeException neu du lieu khong hop le / xe khong the dat
+     */
+    public function createForCustomer(int $userId, int $carId, string $startDate, string $endDate, string $pickupLocation, string $returnLocation, string $note): int
+    {
+        $rentalDays = bookingRentalDays($startDate, $endDate);
+        if (!bookingValidDate($startDate) || !bookingValidDate($endDate) || $rentalDays < 1) {
+            throw new \RuntimeException('Thời gian đặt xe không hợp lệ.');
+        }
+
+        $this->db->begin_transaction();
+
+        try {
+            $stmtCar = $this->db->prepare('SELECT CarID, CarName, PricePerDay, DepositAmount, Status FROM cars WHERE CarID = ? FOR UPDATE');
+            $stmtCar->bind_param('i', $carId);
+            $stmtCar->execute();
+            $car = $stmtCar->get_result()->fetch_assoc();
+
+            if (!$car) {
+                throw new \RuntimeException('Không tìm thấy xe.');
+            }
+
+            if ($car['Status'] === 'Maintenance') {
+                throw new \RuntimeException('Xe đang bảo trì, không thể đặt.');
+            }
+
+            if (bookingHasOverlap($this->db, $carId, $startDate, $endDate)) {
+                throw new \RuntimeException('Xe đã có lịch trong khoảng thời gian này.');
+            }
+
+            $pricePerDay = (float) $car['PricePerDay'];
+            $depositAmount = (float) $car['DepositAmount'];
+            $discountAmount = 0;
+            $totalPrice = max(0, ($rentalDays * $pricePerDay) - $discountAmount);
+
+            $stmt = $this->db->prepare("
+                INSERT INTO bookings
+                (UserID, CarID, StartDate, EndDate, PickupLocation, ReturnLocation, RentalDays, PricePerDay, DepositAmount, DiscountAmount, TotalPrice, Status, Note, CreatedAt, UpdatedAt)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'Pending', ?, NOW(), NOW())
+            ");
+            $stmt->bind_param(
+                'iissssidddds',
+                $userId,
+                $carId,
+                $startDate,
+                $endDate,
+                $pickupLocation,
+                $returnLocation,
+                $rentalDays,
+                $pricePerDay,
+                $depositAmount,
+                $discountAmount,
+                $totalPrice,
+                $note
+            );
+
+            if (!$stmt->execute()) {
+                throw new \RuntimeException('Lỗi đặt xe: ' . $stmt->error);
+            }
+
+            $bookingId = (int) $stmt->insert_id;
+            $paymentType = 'Deposit';
+            $status = 'Pending';
+            $paymentNote = 'Thanh toán tiền cọc giữ xe: ' . $car['CarName'];
+
+            $stmtPay = $this->db->prepare("
+                INSERT INTO payments (BookingID, Amount, PaymentMethod, PaymentType, TransactionCode, PaymentDate, Status, Note)
+                VALUES (?, ?, NULL, ?, '', NULL, ?, ?)
+            ");
+            $stmtPay->bind_param('idsss', $bookingId, $depositAmount, $paymentType, $status, $paymentNote);
+
+            if (!$stmtPay->execute()) {
+                throw new \RuntimeException('Không thể tạo khoản thanh toán: ' . $stmtPay->error);
+            }
+
+            $this->db->commit();
+        } catch (\Throwable $e) {
+            $this->db->rollback();
+            throw new \RuntimeException($e->getMessage());
+        }
+
+        return $bookingId;
     }
 
     /**

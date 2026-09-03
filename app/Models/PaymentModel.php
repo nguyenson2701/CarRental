@@ -10,6 +10,30 @@ class PaymentModel extends Model
     protected string $primaryKey = 'PaymentID';
 
     /**
+     * Danh sach thanh toan cua 1 khach hang (JOIN bookings+cars), giu dung
+     * truy van cua my-payments.php cu.
+     */
+    public function forCustomer(int $userId): array
+    {
+        $stmt = $this->db->prepare("
+            SELECT
+                p.PaymentID, p.BookingID, p.Amount, p.PaymentMethod, p.PaymentType,
+                p.TransactionCode, p.PaymentDate, p.Status, p.Note,
+                b.PenaltyReason, b.TotalPrice, b.DepositAmount, b.OvertimeFee, b.DamageFee,
+                b.CleaningFee, b.OtherFee, b.TotalPenalty,
+                c.CarName, c.LicensePlate
+            FROM payments p
+            INNER JOIN bookings b ON p.BookingID = b.BookingID
+            INNER JOIN cars c ON b.CarID = c.CarID
+            WHERE b.UserID = ?
+            ORDER BY p.PaymentID DESC
+        ");
+        $stmt->bind_param('i', $userId);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+
+    /**
      * Xac nhan da thu tien coc/tien thue (PaymentType Deposit/Rental). Giu
      * dung logic cua api/admin/payments/confirm.php cu: cap nhat thanh
      * toan, chuyen trang thai don (Confirmed neu la Deposit, Paid neu la

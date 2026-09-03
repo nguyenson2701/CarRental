@@ -129,8 +129,8 @@ function chatCarPayload(array $car): array {
         'fuelType' => chatFuelType((string)$car['FuelType']),
         'seats' => (int)$car['Seats'],
         'location' => ((string)($car['Location'] ?? '') !== '0') ? (string)($car['Location'] ?? '') : '',
-        'image' => !empty($car['MainImage']) ? 'assets/img/cars/' . ltrim($car['MainImage'], '/\\') : 'assets/img/cars/car-1.png',
-        'url' => 'vehicle-detail.php?id=' . (int)$car['CarID'],
+        'image' => !empty($car['MainImage']) ? '/Carrental/CarRental_Frontend/assets/img/cars/' . ltrim($car['MainImage'], '/\\') : '/Carrental/CarRental_Frontend/assets/img/cars/car-1.png',
+        'url' => '/Carrental/vehicle/' . (int)$car['CarID'],
     ];
 }
 
@@ -142,7 +142,7 @@ function chatBookingPayload(array $booking): array {
         'daysText' => (int)$booking['RentalDays'] . ' ngày',
         'priceText' => chatMoney($booking['TotalPrice']),
         'status' => chatBookingStatus((string)$booking['Status']),
-        'url' => 'my-bookings.php',
+        'url' => '/Carrental/CarRental_Frontend/my-bookings.php',
     ];
 }
 
@@ -154,7 +154,7 @@ function chatPaymentPayload(array $payment): array {
         'type' => chatPaymentType((string)$payment['PaymentType']),
         'amountText' => chatMoney($payment['Amount']),
         'status' => chatPaymentStatus((string)$payment['Status']),
-        'url' => 'my-payments.php',
+        'url' => '/Carrental/CarRental_Frontend/my-payments.php',
     ];
 }
 

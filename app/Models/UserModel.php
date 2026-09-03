@@ -45,6 +45,14 @@ class UserModel extends Model
         return $stmt->get_result()->num_rows > 0;
     }
 
+    public function emailUsedByOther(string $email, int $excludeUserId): bool
+    {
+        $stmt = $this->db->prepare('SELECT UserID FROM users WHERE Email = ? AND UserID <> ? LIMIT 1');
+        $stmt->bind_param('si', $email, $excludeUserId);
+        $stmt->execute();
+        return $stmt->get_result()->num_rows > 0;
+    }
+
     public function updatePasswordHash(int $userId, string $newHash): void
     {
         $stmt = $this->db->prepare('UPDATE users SET PasswordHash = ? WHERE UserID = ?');

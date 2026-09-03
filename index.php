@@ -24,6 +24,9 @@ use App\Controllers\Admin\PaymentController;
 use App\Controllers\Frontend\AuthController;
 use App\Controllers\Frontend\PageController;
 use App\Controllers\Frontend\BlogController as FrontendBlogController;
+use App\Controllers\Frontend\CarController as FrontendCarController;
+use App\Controllers\Frontend\BookingController as FrontendBookingController;
+use App\Controllers\Frontend\AccountController;
 
 const BASE_PATH = '/Carrental';
 
@@ -99,5 +102,19 @@ $router->get('/about', [PageController::class, 'about']);
 $router->get('/contact', [PageController::class, 'contact']);
 $router->get('/blog', [FrontendBlogController::class, 'index']);
 $router->get('/blog/{slug}', [FrontendBlogController::class, 'show']);
+
+// --- Xe (Frontend) + dat xe ---
+$router->get('/vehicle', [FrontendCarController::class, 'index']);
+$router->get('/vehicle/{id}', [FrontendCarController::class, 'show']);
+$router->get('/vehicle/{id}/book', [FrontendCarController::class, 'bookForm']);
+$router->post('/bookings', [FrontendBookingController::class, 'store']);
+
+// --- Tai khoan khach hang ---
+$router->get('/profile', [AccountController::class, 'profile']);
+$router->post('/profile/update', [AccountController::class, 'updateProfile']);
+$router->get('/my-bookings', [AccountController::class, 'myBookings']);
+$router->get('/my-bookings/{id}/return', [FrontendBookingController::class, 'returnForm']);
+$router->post('/my-bookings/{id}/return', [FrontendBookingController::class, 'submitReturn']);
+$router->get('/my-payments', [AccountController::class, 'myPayments']);
 
 $router->dispatch(BASE_PATH);
