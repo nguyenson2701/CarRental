@@ -89,3 +89,43 @@ Không có bộ test tự động trong repo này. Trước khi báo hoàn tất
   đã hoạt động.
 
 Bàn giao ngắn gọn: đã đổi gì, đã kiểm tra được gì, chưa kiểm được gì.
+
+## 7. Môi trường & lệnh
+
+- **PHP 8.2** chạy qua XAMPP: `C:\xampp\php\php.exe` (trong Git Bash: `/c/xampp/php/php.exe`).
+- App chạy dưới Apache tại **`http://localhost/Carrental/`**. Không có bước build: `app/` không dùng Composer/npm
+  — [app/autoload.php](app/autoload.php) là autoloader PSR-4 tự viết (`App\Foo\Bar` → `app/Foo/Bar.php`).
+- `public/admin/` có `package.json` nhưng chỉ là bộ theme SB Admin 2 tải sẵn — không cần `npm install` để chạy app.
+- Không có test tự động. Kiểm tra tối thiểu: `/c/xampp/php/php.exe -l <file>` cho mọi file PHP đã sửa (xem mục 6).
+- Đổi tên thư mục dự án trên XAMPP thì phải sửa hằng `BASE_PATH` trong [index.php](index.php) cho khớp
+  (hiện là `/Carrental`).
+
+## 8. Vòng đời request & quy ước khi thêm/sửa module MVC
+
+**Luồng chạy:** Apache → [.htaccess](.htaccess) (URL không trỏ tới file/thư mục thật → `index.php`) →
+[index.php](index.php) đăng ký route → [app/Core/Router.php](app/Core/Router.php) cắt `BASE_PATH`, so khớp
+`METHOD + path`, tách tham số `{id}` → `new Controller()` rồi gọi `action(...$params)` → Controller gọi Model
+lấy dữ liệu → `$this->view()` render View lồng trong Layout.
+
+Khi thêm một module (ví dụ "Khuyến mãi"):
+
+1. **Route** — khai báo trong [index.php](index.php). Router **chỉ hỗ trợ `get()` và `post()`** (không PUT/DELETE);
+   sửa/xoá đi qua `POST .../update`, `POST .../delete`. Đường dá́n route **không** kèm `/Carrental` (đã bị cắt).
+2. **Controller** — [app/Controllers/Admin/](app/Controllers/Admin/) hoặc `Frontend/`, kế thừa
+   [app/Core/Controller.php](app/Core/Controller.php). Trong `__construct()` gọi `Auth::start()` rồi
+   `Auth::requireAdminOrStaff('/Carrental/login')` (hoặc `requireCustomer` / `requireLogin`) — hàm này **tự
+   kiểm CSRF cho mọi request POST**. Tham số route vào dưới dạng **chuỗi**, tự ép `(int)`. Lấy input qua
+   `$this->input()` / `inputInt()` / `inputFloat()`. Chuyển hướng bằng `$this->redirect('/Carrental/...')`
+   (đường dẫn ở đây **có** `/Carrental`).
+3. **Model** — [app/Models/](app/Models/), kế thừa [app/Core/Model.php](app/Core/Model.php). Chỉ cần khai báo
+   `$table` (tên bảng thật, PascalCase — vd `Brands`) và `$primaryKey` (khoá thật — vd `BrandID`, không phải
+   `id`). Kế thừa sẵn `find/all/create/update/delete` chạy prepared statement. Query tự viết thêm **cũng phải**
+   dùng `$this->db->prepare()` + `bind_param()` — không nối chuỗi vào SQL.
+4. **View** — [app/Views/](app/Views/), chỉ chứa HTML + biểu thức PHP hiển thị, **không query DB**. Render qua
+   `$this->view('admin/khuyenmai/list', [...], 'admin/layout/main')`. Layout mặc định là `admin/layout/main`;
+   trang Frontend truyền `'frontend/layout/main'`; truyền `null` nếu không cần layout. Form add/edit/delete phải
+   có `<?= Auth::csrfField() ?>`.
+5. **Asset** — CSS/JS/ảnh giao diện đặt dưới `public/admin/` hoặc `public/frontend/`, tham chiếu bằng đường dẫn
+   tuyệt đối `/Carrental/public/...` (xem [app/Views/admin/layout/main.php](app/Views/admin/layout/main.php)).
+6. **Helper dùng chung** — upload ảnh, xử lý booking/blog nằm ở [CarRental_Backend/helpers/](CarRental_Backend/helpers/),
+   nạp bằng `require_once` từ Controller (xem [PageController.php](app/Controllers/Frontend/PageController.php)).
