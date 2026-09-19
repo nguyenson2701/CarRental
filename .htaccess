@@ -1,0 +1,9 @@
+# Dieu huong cac URL "sach" (vd /Carrental/admin/brands) ve front controller
+# index.php. Cac file/thu muc co that (CarRental_Admin/..., CarRental_Frontend/...,
+# CarRental_Backend/...) van duoc phuc vu truc tiep nhu cu, KHONG bi anh huong -
+# day la chien luoc chuyen doi dan sang MVC, khong pha vo duong dan cu dang chay.
+RewriteEngine On
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [L]

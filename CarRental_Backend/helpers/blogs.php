@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . '/upload.php';
+
 function makeBlogSlug(string $title): string
 {
     $slug = trim($title);
@@ -50,25 +52,15 @@ function uploadBlogThumbnail(string $fieldName = 'Thumbnail'): string
         return '';
     }
 
-    $allowedExt = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
-    $originalName = $_FILES[$fieldName]['name'];
-    $ext = strtolower(pathinfo($originalName, PATHINFO_EXTENSION));
+    $uploadDir = __DIR__ . '/../../public/frontend/assets/img/blogs';
+    $fileName = safeUploadImage($fieldName, $uploadDir, 'blog', ['jpg', 'jpeg', 'png', 'gif', 'webp']);
 
-    if (!in_array($ext, $allowedExt, true)) {
-        die('Dinh dang anh blog khong hop le.');
+    if ($fileName === null) {
+        return '';
     }
 
-    $uploadDir = __DIR__ . '/../../CarRental_Frontend/assets/img/blogs';
-    if (!is_dir($uploadDir) && !mkdir($uploadDir, 0777, true)) {
-        die('Khong the tao thu muc anh blog.');
-    }
-
-    $safeName = preg_replace('/[^a-zA-Z0-9_\-\.]/', '_', basename($originalName));
-    $fileName = time() . '_' . random_int(1000, 9999) . '_' . $safeName;
-    $targetPath = $uploadDir . '/' . $fileName;
-
-    if (!move_uploaded_file($_FILES[$fieldName]['tmp_name'], $targetPath)) {
-        die('Khong the upload anh blog.');
+    if ($fileName === false) {
+        die('Anh blog khong hop le (chi chap nhan jpg, jpeg, png, gif, webp va phai la anh that).');
     }
 
     return $fileName;
@@ -92,11 +84,11 @@ function blogThumbnailSrc(string $thumbnail, string $publicPrefix = 'assets/img/
         $normalized = 'blogs/' . $normalized;
     }
 
-    $absolutePath = __DIR__ . '/../../CarRental_Frontend/assets/img/' . $normalized;
+    $absolutePath = __DIR__ . '/../../public/frontend/assets/img/' . $normalized;
     if (!is_file($absolutePath)) {
         if (preg_match('/^blogs\/blog(\d+)\.(jpg|jpeg|png|webp|gif)$/i', $normalized, $matches)) {
             $legacyFallback = 'cars/blog-' . $matches[1] . '.' . strtolower($matches[2]);
-            $legacyPath = __DIR__ . '/../../CarRental_Frontend/assets/img/' . $legacyFallback;
+            $legacyPath = __DIR__ . '/../../public/frontend/assets/img/' . $legacyFallback;
             if (is_file($legacyPath)) {
                 return rtrim($publicPrefix, '/') . '/' . $legacyFallback;
             }

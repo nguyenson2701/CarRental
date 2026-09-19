@@ -1,0 +1,14 @@
+/*
+ * Chi con lai cac rule thuc su can rieng cho trang xe (canh giua o bang
+ * chua anh nhieu dong). Da bo toan bo phan override layout (#content,
+ * .container-fluid, border-radius .card/.btn...) va cac class khong con
+ * duoc dung o dau (badge-available/booked/rented/maintenance/inactive,
+ * action-group, car-thumb, image-main, no-image, summary-card,
+ * #searchInput/#statusFilter, img-card/img-wrap/badge-main/preview-*
+ * da co ban rieng ngay trong cars/edit.php) - day chinh la nguyen nhan
+ * khung trang "Quan ly xe" bi lech so voi cac trang admin khac.
+ */
+.table td,
+.table th {
+    vertical-align: middle !important;
+}
